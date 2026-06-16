@@ -13,8 +13,7 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
     <>
       <style>{`
         .footer {
-  position:relative;
-  width:100%;
+  position:fixed; bottom:0; left:0; right:0; z-index:20;
   backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
   -webkit-backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
   background:rgba(255,255,255,0.04);
