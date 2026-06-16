@@ -25,12 +25,19 @@ function getISTHour(): number {
 }
 
 function getISTTime(): string {
-  return new Date().toLocaleTimeString('en-IN', {
+  const now = new Date()
+  const time = now.toLocaleTimeString('en-IN', {
     timeZone: 'Asia/Kolkata',
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
   })
+  const date = now.toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric',
+    month: 'short',
+  })
+  return `${date} · ${time}`
 }
 
 function getScene(h: number, wxCode: number): string {
