@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
 // ─── CONFIG ───────────────────────────────────────────────────────────
-// STATUS: 'open' | 'closed' | 'awd'
 const TUNNEL_STATUS: 'open' | 'closed' | 'awd' = 'open'
 const LAST_UPDATED = '16 June 2026'
 const STATUS_NOTE = 'Clear conditions, tunnel operating normally'
@@ -63,7 +62,10 @@ function getScene(h: number): string {
 export default function AtalTunnelChecker() {
   const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day')
-  const [weather, setWeather] = useState<{ temp: string; humidity: string; feels: string; wind: string; visibility: string; description: string } | null>(null)
+  const [weather, setWeather] = useState<{
+    temp: string; humidity: string; feels: string
+    wind: string; visibility: string; description: string
+  } | null>(null)
   const [showAnswer, setShowAnswer] = useState(false)
   const starsRef = useRef<HTMLDivElement>(null)
 
@@ -137,12 +139,12 @@ export default function AtalTunnelChecker() {
         .grade { position:absolute; inset:0 }
         .vignette {
           position:absolute; inset:0;
-          background:radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.55) 100%);
+          background:radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.6) 100%);
           z-index:1; pointer-events:none;
         }
         .scrim {
-          position:absolute; bottom:0; left:0; right:0; height:65%;
-          background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.3) 50%,transparent 100%);
+          position:absolute; bottom:0; left:0; right:0; height:50%;
+          background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.2) 50%,transparent 100%);
           z-index:1; pointer-events:none;
         }
 
@@ -151,6 +153,7 @@ export default function AtalTunnelChecker() {
         .star { position:absolute; border-radius:50%; background:#fff; animation:twinkle ease-in-out infinite }
         @keyframes twinkle { 0%,100%{opacity:.9} 50%{opacity:.2} }
 
+        /* ─── HEADER ─── */
         .header {
           position:fixed; top:0; left:0; right:0; z-index:20;
           padding:1.25rem 2rem 1.1rem;
@@ -177,6 +180,7 @@ export default function AtalTunnelChecker() {
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.88); letter-spacing:.02em }
         .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:1px }
 
+        /* ─── NAV ─── */
         .nav-pill {
           display:flex; align-items:center;
           background:rgba(255,255,255,0.02);
@@ -184,7 +188,7 @@ export default function AtalTunnelChecker() {
           -webkit-backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
           border-radius:100px; padding:3px;
           border:1px solid rgba(255,255,255,0.28);
-          box-shadow: 0 2px 20px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.35);
+          box-shadow:0 2px 20px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.35);
           position:relative; overflow:hidden;
         }
         .nav-pill::before {
@@ -208,22 +212,24 @@ export default function AtalTunnelChecker() {
         .nav-link:hover { color:rgba(255,255,255,0.8) }
         .nav-link.active {
           color:#fff; background:rgba(255,255,255,0.18);
-          box-shadow: 0 1px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+          box-shadow:0 1px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
         }
         .nav-divider {
           width:1px; height:14px; background:rgba(255,255,255,0.2);
           flex-shrink:0; margin:0 1px;
         }
 
+        /* ─── PAGE ─── */
         .page {
-  position:fixed; inset:0; z-index:10;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:0 1.5rem; padding-top:140px; padding-bottom:90px;
-}
+          position:fixed; inset:0; z-index:10;
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          padding:0 1.5rem; padding-top:120px; padding-bottom:90px;
+        }
         .content { text-align:center; max-width:640px; width:100% }
+
         .tagline {
           font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
-          color:rgba(255,255,255,0.38); margin-bottom:1.6rem;
+          color:rgba(255,255,255,0.38); margin-bottom:2rem;
         }
         .headline {
           font-family:var(--font-cormorant), serif; font-weight:300;
@@ -235,20 +241,21 @@ export default function AtalTunnelChecker() {
         }
         .headline em { font-style:italic; color:#fff }
 
+        /* ─── ANSWER ─── */
         .answer-wrap {
-  min-height:100px; display:flex; align-items:center; justify-content:center;
-  margin-bottom:1rem;
-}
-.answer-inner {
-  display:none; flex-direction:column; align-items:center; gap:16px;
-  animation:rise .8s cubic-bezier(.22,1,.36,1) both;
-}
+          display:flex; align-items:center; justify-content:center;
+          margin-bottom:1rem;
+        }
+        .answer-inner {
+          display:none; flex-direction:column; align-items:center; gap:14px;
+          animation:rise .8s cubic-bezier(.22,1,.36,1) both;
+        }
         .answer-inner.show { display:flex }
         @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
         .answer-word {
           font-family:var(--font-cormorant), serif;
-          font-size:clamp(7rem,14vw,7rem);
+          font-size:clamp(4rem,14vw,7rem);
           font-weight:300; line-height:1; letter-spacing:-.03em;
           text-shadow:0 8px 60px rgba(0,0,0,0.28);
         }
@@ -259,11 +266,12 @@ export default function AtalTunnelChecker() {
         .answer-note {
           font-family:var(--font-cormorant), serif;
           font-size:15px; font-weight:300; font-style:italic;
-          color:rgba(255,255,255,0.45); margin-top:2px;
+          color:rgba(255,255,255,0.45);
         }
 
+        /* ─── TIMESTAMP ─── */
         .answer-timestamp {
-          display:flex; align-items:center; gap:8px; margin-top:4px;
+          display:flex; align-items:center; gap:8px;
         }
         .ts-badge { display:flex; align-items:center; gap:4px }
         .ts-dot {
@@ -293,10 +301,11 @@ export default function AtalTunnelChecker() {
 
         .last-updated {
           font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
-          color:rgba(255,255,255,0.28); margin-top:.2rem;
+          color:rgba(255,255,255,0.28);
         }
         .last-updated span { color:rgba(255,255,255,0.5); font-weight:500 }
 
+        /* ─── BOTTOM BAR ─── */
         .wx-bar {
           position:fixed; bottom:0; left:0; right:0; z-index:20;
           padding:1.2rem 2.5rem;
@@ -322,6 +331,7 @@ export default function AtalTunnelChecker() {
         }
         .footer-sig strong { font-style:normal; font-weight:400; color:rgba(255,255,255,0.42) }
 
+        /* ─── MOBILE ─── */
         @media(max-width:600px) {
           .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
@@ -329,9 +339,9 @@ export default function AtalTunnelChecker() {
           .nav-pill { padding:3px }
           .nav-link { font-size:9.5px; padding:7px 14px; letter-spacing:.09em }
           .page { padding-top:105px; padding-bottom:80px }
-          .tagline { font-size:9px; margin-bottom:1rem }
-          .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.4rem }
-          .answer-word { font-size:clamp(3.5rem,16vw,6rem) }
+          .tagline { font-size:9px; margin-bottom:1.2rem }
+          .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.8rem }
+          .answer-word { font-size:clamp(3rem,14vw,5rem) }
           .answer-sub { font-size:9px }
           .wx-bar { padding:0.9rem 1.1rem }
           .wx-stats { gap:1.1rem }
@@ -343,17 +353,17 @@ export default function AtalTunnelChecker() {
       `}</style>
 
       {/* Background */}
-<div className="bg-stack">
-  <div className={`bg-img on`}
-  style={{ 
-    backgroundImage: `url('/bg-atal-tunnel.jpg')`, 
-    backgroundPosition: 'center center',
-  }}>
-  <div className="grade" style={{ background: 'rgba(0,8,20,0.45)' }} />
-</div>
-  <div className="vignette" />
-  <div className="scrim" />
-</div>
+      <div className="bg-stack">
+        <div className="bg-img on"
+          style={{
+            backgroundImage: `url('/bg-atal-tunnel.jpg')`,
+            backgroundPosition: 'center center',
+          }}>
+          <div className="grade" style={{ background: 'rgba(0,5,15,0.5)' }} />
+        </div>
+        <div className="vignette" />
+        <div className="scrim" />
+      </div>
 
       {/* Stars */}
       <div ref={starsRef} className={`starfield${scene === 'night' ? ' on' : ''}`} />
@@ -404,7 +414,6 @@ export default function AtalTunnelChecker() {
               </div>
               <div className="answer-sub">{status.sub}</div>
               <div className="answer-note">{status.note}</div>
-
               <div className="answer-timestamp">
                 <div className="ts-badge">
                   <span className="ts-dot" />
@@ -415,7 +424,6 @@ export default function AtalTunnelChecker() {
                 <span className="ts-dot-mid">·</span>
                 <span className="ts-time">{dateTime.time}</span>
               </div>
-
               <div className="last-updated">
                 Last updated: <span>{LAST_UPDATED}</span>
               </div>
