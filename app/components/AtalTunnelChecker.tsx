@@ -216,9 +216,9 @@ export default function AtalTunnelChecker() {
         }
 
         .page {
-          position:fixed; inset:0; z-index:10;
-          display:flex; flex-direction:column; align-items:center; justify-content:center;
-          padding:0 1.5rem; padding-top:120px; padding-bottom:90px;
+         position:fixed; inset:0; z-index:10;
+         display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+         padding:0 1.5rem; padding-top:140px; padding-bottom:90px;
         }
         .content { text-align:center; max-width:640px; width:100% }
         .tagline {
