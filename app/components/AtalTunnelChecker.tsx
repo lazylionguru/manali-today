@@ -216,10 +216,10 @@ export default function AtalTunnelChecker() {
         }
 
         .page {
-         position:fixed; inset:0; z-index:10;
-         display:flex; flex-direction:column; align-items:center; justify-content:center;
-         padding:0 1.5rem; padding-top:120px; padding-bottom:90px;
-        }
+  position:fixed; inset:0; z-index:10;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0 1.5rem; padding-top:140px; padding-bottom:90px;
+}
         .content { text-align:center; max-width:640px; width:100% }
         .tagline {
           font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
@@ -236,13 +236,13 @@ export default function AtalTunnelChecker() {
         .headline em { font-style:italic; color:#fff }
 
         .answer-wrap {
-          min-height:100px; display:flex; align-items:center; justify-content:center;
-          margin-bottom:1rem;
-        }
-        .answer-inner {
-          display:none; flex-direction:column; align-items:center; gap:10px;
-          animation:rise .8s cubic-bezier(.22,1,.36,1) both;
-        }
+  min-height:100px; display:flex; align-items:center; justify-content:center;
+  margin-bottom:1rem;
+}
+.answer-inner {
+  display:none; flex-direction:column; align-items:center; gap:16px;
+  animation:rise .8s cubic-bezier(.22,1,.36,1) both;
+}
         .answer-inner.show { display:flex }
         @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
