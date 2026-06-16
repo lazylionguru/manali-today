@@ -448,7 +448,7 @@ export default function RohtangChecker() {
               <div className="answer-note">{status.note}</div>
 
               {/* Permit notice — always show when open */}
-              {effectiveStatus === 'open' && (
+              
                 <div className="permit-notice">
                   <span className="permit-icon">📋</span>
                   <span className="permit-text">Permit required —</span>
@@ -457,7 +457,7 @@ export default function RohtangChecker() {
                     target="_blank"
                     rel="noopener noreferrer"
                 </div>
-              )}
+              
 
               <div className="answer-timestamp">
                 <div className="ts-badge">
