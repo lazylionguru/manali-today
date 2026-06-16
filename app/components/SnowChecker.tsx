@@ -186,7 +186,7 @@ export default function SnowChecker() {
           position:fixed; top:0; left:0; right:0; z-index:20;
           padding:1.25rem 2rem 1.1rem;
           display:flex; flex-direction:column; align-items:center; gap:1rem;
-          background:linear-gradient(to bottom,rgba(0,0,0,0.52) 0%,transparent 100%);
+          
         }
 
         /* Top row */
@@ -214,7 +214,7 @@ export default function SnowChecker() {
         /* ─── FROSTED GLASS NAV ─── */
         .nav-pill {
   display:flex; align-items:center;
-  background:rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.02);
   backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
   -webkit-backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
   border-radius:100px;
