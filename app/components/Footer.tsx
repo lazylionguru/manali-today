@@ -19,12 +19,18 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
   box-sizing:border-box;
   color:#fff;
 
-  background:rgba(255,255,255,0.04);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  background:rgba(255,255,255,0.03);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
-  border-top:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 -10px 30px rgba(0,0,0,0.1);
+  border-top:1px solid rgba(255,255,255,0.25);
+  border-left:1px solid rgba(255,255,255,0.03);
+  border-right:1px solid rgba(255,255,255,0.03);
+  border-bottom:none;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.15),
+    0 -12px 30px rgba(0,0,0,0.25);
 }
 
         .footer-top {
