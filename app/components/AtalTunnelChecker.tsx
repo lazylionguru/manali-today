@@ -248,7 +248,7 @@ export default function AtalTunnelChecker() {
 
         .answer-word {
           font-family:var(--font-cormorant), serif;
-          font-size:clamp(5rem,18vw,9rem);
+          font-size:clamp(7rem,14vw,7rem);
           font-weight:300; line-height:1; letter-spacing:-.03em;
           text-shadow:0 8px 60px rgba(0,0,0,0.28);
         }
