@@ -87,7 +87,7 @@ export default function AtalTunnelChecker() {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const res = await fetch('/api/weather')
+        const res = await fetch('/api/weather-tunnel')
         const d = await res.json()
         setWeather({
           temp: Math.round(d.main.temp) + '°C',
