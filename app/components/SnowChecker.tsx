@@ -424,7 +424,7 @@ export default function SnowChecker() {
       <div className="bg-stack">
         {['night','sunrise','day-sunny','day-cloudy','day-clear','sunset'].map(id => (
           <div key={id} className={`bg-img${scene === id ? ' on' : ''}`}
-            style={{ backgroundImage: `url('/bg-${id}.png')` }}>
+            style={{ backgroundImage: `url('/bg-${id}.webp')` }}>
             <div className="grade" style={{ background: ({
               'night':     'rgba(4,10,30,0.38)',
               'sunrise':   'rgba(15,5,0,0.28)',

@@ -388,7 +388,7 @@ export default function RohtangChecker() {
       <div className="bg-stack">
         <div className="bg-img on"
           style={{
-            backgroundImage: `url('/bg-rohtang.jpg')`,
+            backgroundImage: `url('/bg-rohtang.webp')`,
             backgroundPosition: 'center center',
           }}>
           <div className="grade" style={{ background: 'rgba(0,5,15,0.3)' }} />
