@@ -213,17 +213,46 @@ export default function SnowChecker() {
 
         /* ─── FROSTED GLASS NAV ─── */
         .nav-pill {
-          display:flex; align-items:center;
-          background:rgba(255,255,255,0.07);
-          backdrop-filter:blur(40px) saturate(180%);
-          -webkit-backdrop-filter:blur(40px) saturate(180%);
-          border:1px solid rgba(255,255,255,0.14);
-          border-radius:100px;
-          padding:4px;
-          box-shadow:
-            0 8px 32px rgba(0,0,0,0.24),
-            inset 0 1px 0 rgba(255,255,255,0.1);
-        }
+  display:flex; align-items:center;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(60px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter:blur(60px) saturate(200%) brightness(1.1);
+  border-radius:100px;
+  padding:4px;
+  /* outer shadow for depth */
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.18),
+    0 1px 0 rgba(255,255,255,0.0) inset;
+  /* the key: two borders — top specular highlight, full subtle border */
+  border:1px solid rgba(255,255,255,0.18);
+  position:relative;
+  overflow:hidden;
+}
+/* specular highlight — the top light catch */
+.nav-pill::before {
+  content:'';
+  position:absolute;
+  top:0; left:8%; right:8%;
+  height:1px;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.55) 30%,
+    rgba(255,255,255,0.55) 70%,
+    transparent
+  );
+  border-radius:100px;
+}
+/* inner glow at the very top */
+.nav-pill::after {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:40%;
+  background:linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+  border-radius:100px 100px 0 0;
+  pointer-events:none;
+}
         .nav-link {
           font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
           color:rgba(255,255,255,0.5);
