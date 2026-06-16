@@ -345,13 +345,12 @@ export default function AtalTunnelChecker() {
       {/* Background */}
 <div className="bg-stack">
   <div className={`bg-img on`}
-    style={{ 
-      backgroundImage: `url('/bg-atal-tunnel.jpg')`, 
-      backgroundPosition: 'center 40%',
-      backgroundSize: '120%'
-    }}>
-    <div className="grade" style={{ background: 'rgba(0,8,20,0.45)' }} />
-  </div>
+  style={{ 
+    backgroundImage: `url('/bg-atal-tunnel.jpg')`, 
+    backgroundPosition: 'center center',
+  }}>
+  <div className="grade" style={{ background: 'rgba(0,8,20,0.45)' }} />
+</div>
   <div className="vignette" />
   <div className="scrim" />
 </div>
