@@ -13,13 +13,14 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
     <>
       <style>{`
         .footer {
-          position:relative;
-          backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
-          -webkit-backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
-          background:rgba(255,255,255,0.04);
-          border-top:1px solid rgba(255,255,255,0.1);
-          padding:1.25rem 2.5rem 1rem;
-        }
+  position:relative;
+  width:100%;
+  backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter:blur(60px) saturate(180%) brightness(1.05);
+  background:rgba(255,255,255,0.04);
+  border-top:1px solid rgba(255,255,255,0.1);
+  padding:1.25rem 2.5rem 1rem;
+}
 
         .footer-top {
           display:grid;
