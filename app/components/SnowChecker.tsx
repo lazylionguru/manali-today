@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 
 // ─── CONFIG ───────────────────────────────────────────────────────────
 const IS_SNOWING = false
@@ -64,14 +65,12 @@ export default function SnowChecker() {
   const starsRef = useRef<HTMLDivElement>(null)
   const snowRef = useRef<HTMLDivElement>(null)
 
-  // Clock — updates every second
   useEffect(() => {
     setTime(getISTTime())
     const t = setInterval(() => setTime(getISTTime()), 1000)
     return () => clearInterval(t)
   }, [])
 
-  // Scene
   useEffect(() => {
     const update = () => {
       const wxCode = weather?.wxCode ?? 800
@@ -82,7 +81,6 @@ export default function SnowChecker() {
     return () => clearInterval(t)
   }, [weather])
 
-  // Weather fetch
   useEffect(() => {
     const fetchWeather = async () => {
       try {
@@ -106,13 +104,11 @@ export default function SnowChecker() {
     return () => clearInterval(t)
   }, [])
 
-  // Show answer after mount
   useEffect(() => {
     const t = setTimeout(() => setShowAnswer(true), 300)
     return () => clearTimeout(t)
   }, [])
 
-  // Generate stars once
   useEffect(() => {
     const sf = starsRef.current
     if (!sf || sf.children.length > 0) return
@@ -125,7 +121,6 @@ export default function SnowChecker() {
     }
   }, [])
 
-  // Generate snowflakes once
   useEffect(() => {
     const sf = snowRef.current
     if (!sf || sf.children.length > 0) return
@@ -183,18 +178,17 @@ export default function SnowChecker() {
           100%{transform:translateY(105vh) translateX(35px) rotate(360deg);opacity:0}
         }
 
-        .page {
-          position:fixed; inset:0; z-index:10;
-          display:flex; flex-direction:column; align-items:center; justify-content:center;
-          padding:0 1.5rem; padding-top:80px; padding-bottom:90px;
+        /* ─── TOP HEADER ─── */
+        .header {
+          position:fixed; top:0; left:0; right:0; z-index:20;
+          padding:1.1rem 1.75rem 0.9rem;
+          display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+          background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 100%);
         }
 
-        /* ─── TOP BAR ─── */
-        .weather-strip {
-          position:fixed; top:0; left:0; right:0; z-index:20;
-          padding:1.1rem 1.75rem;
-          display:flex; align-items:center; justify-content:space-between;
-          background:linear-gradient(to bottom,rgba(0,0,0,0.45) 0%,transparent 100%);
+        /* Row 1: location left, weather right */
+        .header-row {
+          width:100%; display:flex; align-items:center; justify-content:space-between;
         }
         .location-pill {
           display:flex; align-items:center; gap:6px;
@@ -209,30 +203,77 @@ export default function SnowChecker() {
           0%,100%{box-shadow:0 0 0 0 rgba(72,217,192,.5)}
           50%{box-shadow:0 0 0 5px rgba(72,217,192,0)}
         }
-
-        /* ─── CENTERED LIVE TIMESTAMP ─── */
-        .live-timestamp {
-          position:absolute; left:50%; transform:translateX(-50%);
-          display:flex; flex-direction:column; align-items:center; gap:3px;
-        }
-        .live-timestamp-badge {
-          display:flex; align-items:center; gap:5px;
-        }
-        .live-label {
-          font-size:8px; font-weight:500; letter-spacing:.25em; text-transform:uppercase;
-          color:rgba(72,217,192,0.85);
-        }
-        .live-time {
-          font-family:var(--font-cormorant), serif;
-          font-size:14px; font-weight:300;
-          color:rgba(255,255,255,0.82);
-          letter-spacing:.06em; white-space:nowrap;
-        }
-
         .weather-data { display:flex; align-items:center; gap:1.5rem }
         .wx-item { text-align:right }
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.9); letter-spacing:.02em }
         .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-top:1px }
+
+        /* Row 2: frosted glass nav pill */
+        .nav-pill {
+          display:flex; align-items:center; gap:0;
+          background:rgba(255,255,255,0.08);
+          backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+          border:1px solid rgba(255,255,255,0.12);
+          border-radius:100px;
+          padding:0 4px;
+          overflow:hidden;
+        }
+        .nav-link {
+          font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+          color:rgba(255,255,255,0.55);
+          text-decoration:none;
+          padding:6px 16px;
+          border-radius:100px;
+          transition:color .2s ease, background .2s ease;
+          white-space:nowrap;
+        }
+        .nav-link:hover { color:rgba(255,255,255,0.9) }
+        .nav-link.active {
+          color:rgba(255,255,255,0.95);
+          background:rgba(255,255,255,0.12);
+        }
+        .nav-divider {
+          width:1px; height:12px;
+          background:rgba(255,255,255,0.15);
+          flex-shrink:0;
+        }
+
+        /* Row 3: live timestamp */
+        .live-timestamp {
+          display:flex; align-items:center; gap:7px;
+        }
+        .live-badge {
+          display:flex; align-items:center; gap:4px;
+        }
+        .live-dot-small {
+          width:5px; height:5px; border-radius:50%;
+          background:#a8e6cf;
+          animation:pulse-soft 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-soft {
+          0%,100%{box-shadow:0 0 0 0 rgba(168,230,207,.5)}
+          50%{box-shadow:0 0 0 4px rgba(168,230,207,0)}
+        }
+        .live-label {
+          font-size:7.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase;
+          color:rgba(168,230,207,0.8);
+        }
+        .live-sep {
+          width:1px; height:10px; background:rgba(255,255,255,0.15);
+        }
+        .live-time {
+          font-family:var(--font-cormorant), serif;
+          font-size:13px; font-weight:300;
+          color:rgba(255,255,255,0.7);
+          letter-spacing:.06em; white-space:nowrap;
+        }
+
+        /* ─── PAGE ─── */
+        .page {
+          position:fixed; inset:0; z-index:10;
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          padding:0 1.5rem; padding-top:110px; padding-bottom:90px;
+        }
 
         .content { text-align:center; max-width:600px; width:100% }
         .tagline { font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,0.42); margin-bottom:1.6rem }
@@ -251,6 +292,7 @@ export default function SnowChecker() {
         .snow-history { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.32); margin-top:.6rem }
         .snow-history span { color:rgba(255,255,255,0.55); font-weight:500 }
 
+        /* ─── BOTTOM BAR ─── */
         .wx-bar {
           position:fixed; bottom:0; left:0; right:0; z-index:20;
           padding:1.2rem 2.5rem;
@@ -265,19 +307,25 @@ export default function SnowChecker() {
         .footer-sig { font-family:var(--font-cormorant), serif; font-style:italic; font-size:13px; font-weight:300; color:rgba(255,255,255,0.28); letter-spacing:.04em; text-align:right; line-height:1.5 }
         .footer-sig strong { font-style:normal; font-weight:400; color:rgba(255,255,255,0.42) }
 
+        /* ─── MOBILE ─── */
         @media(max-width:600px) {
-          .weather-strip { padding:1rem 1.25rem; align-items:center }
-          .weather-data .wx-item { display:none }
-          .weather-data { gap:0 }
-          .location-pill { font-size:9.5px; letter-spacing:.13em }
-          .live-timestamp { display:none }
-          .page { padding-top:72px; padding-bottom:80px }
+          .header { padding:0.85rem 1.1rem 0.7rem; gap:0.5rem }
+          .header-row .weather-data { display:none }
+          .location-pill { font-size:9px; letter-spacing:.12em }
+
+          .nav-link { font-size:9px; padding:5px 12px; letter-spacing:.1em }
+
+          .live-time { font-size:11.5px }
+          .live-label { font-size:7px }
+
+          .page { padding-top:105px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1rem }
           .headline { font-size:clamp(2.6rem,11vw,4rem); margin-bottom:1.4rem }
           .answer-word { font-size:clamp(5.5rem,22vw,7.5rem) }
           .answer-sub { font-size:9px; letter-spacing:.16em }
           .snow-history { font-size:10px }
-          .wx-bar { padding:0.9rem 1.25rem; gap:0.5rem }
+
+          .wx-bar { padding:0.9rem 1.1rem }
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }
@@ -311,36 +359,49 @@ export default function SnowChecker() {
       {/* Snow particles */}
       <div ref={snowRef} className={`snowfield${IS_SNOWING ? ' on' : ''}`} />
 
-      {/* Top bar */}
-      <div className="weather-strip">
-        <div className="location-pill">
-          <span className="live-dot" />
-          Manali · Kullu Valley · 2050m
+      {/* Header */}
+      <header className="header">
+        {/* Row 1 — location + weather */}
+        <div className="header-row">
+          <div className="location-pill">
+            <span className="live-dot" />
+            Manali · Kullu Valley · 2050m
+          </div>
+          <div className="weather-data">
+            <div className="wx-item">
+              <div className="wx-val">{weather?.temp ?? '—'}</div>
+              <div className="wx-label">Temp</div>
+            </div>
+            <div className="wx-item">
+              <div className="wx-val">{weather?.humidity ?? '—'}</div>
+              <div className="wx-label">Humidity</div>
+            </div>
+            <div className="wx-item">
+              <div className="wx-val">{weather?.feels ?? '—'}</div>
+              <div className="wx-label">Feels like</div>
+            </div>
+          </div>
         </div>
 
+        {/* Row 2 — frosted glass nav */}
+        <nav className="nav-pill">
+          <Link href="/" className="nav-link active">❄ Snow</Link>
+          <div className="nav-divider" />
+          <Link href="/atal-tunnel" className="nav-link">Atal Tunnel</Link>
+          <div className="nav-divider" />
+          <Link href="/rohtang-pass" className="nav-link">Rohtang Pass</Link>
+        </nav>
+
+        {/* Row 3 — live timestamp */}
         <div className="live-timestamp">
-          <div className="live-timestamp-badge">
-            <span className="live-dot" />
+          <div className="live-badge">
+            <span className="live-dot-small" />
             <span className="live-label">Live</span>
           </div>
+          <div className="live-sep" />
           <div className="live-time">{time}</div>
         </div>
-
-        <div className="weather-data">
-          <div className="wx-item">
-            <div className="wx-val">{weather?.temp ?? '—'}</div>
-            <div className="wx-label">Temp</div>
-          </div>
-          <div className="wx-item">
-            <div className="wx-val">{weather?.humidity ?? '—'}</div>
-            <div className="wx-label">Humidity</div>
-          </div>
-          <div className="wx-item">
-            <div className="wx-val">{weather?.feels ?? '—'}</div>
-            <div className="wx-label">Feels like</div>
-          </div>
-        </div>
-      </div>
+      </header>
 
       {/* Hero */}
       <div className="page">
@@ -384,7 +445,7 @@ export default function SnowChecker() {
         <div className="footer-sig">
           Updated by someone<br />who <strong>lives here</strong><br />
           <span style={{ fontSize:'11px', color:'rgba(255,255,255,0.18)', letterSpacing:'.1em', fontStyle:'normal' }}>
-            Built with ♥ in Manali 
+            Built with love in Manali ♥
           </span>
         </div>
       </div>
