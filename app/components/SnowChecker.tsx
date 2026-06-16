@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Footer from './Footer'
 
 // ─── CONFIG ───────────────────────────────────────────────────────────
 const IS_SNOWING = false
@@ -535,6 +536,11 @@ export default function SnowChecker() {
             Built with love in Manali ♥
           </span>
         </div>
+        <Footer
+      wind={weather?.wind}
+      visibility={weather?.visibility}
+      description={weather?.description}
+      />
       </div>
     </>
   )
