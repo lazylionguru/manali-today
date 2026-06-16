@@ -447,16 +447,12 @@ export default function RohtangChecker() {
               <div className="answer-sub">{status.sub}</div>
               <div className="answer-note">{status.note}</div>
 
-              {/* Permit notice — always show when open */}
-              
-                <div className="permit-notice">
-                  <span className="permit-icon">📋</span>
-                  <span className="permit-text">Permit required —</span>
-                  
-                    href="https://rohtangpermits.hp.gov.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                </div>
+              {/* Permit notice */}
+<div className="permit-notice">
+  <span className="permit-icon">📋</span>
+  <span className="permit-text">Permit required —</span>
+  <a href="https://rohtangpermits.hp.gov.in" target="_blank" rel="noopener noreferrer" className="permit-link">Book here</a>
+</div>
               
 
               <div className="answer-timestamp">
