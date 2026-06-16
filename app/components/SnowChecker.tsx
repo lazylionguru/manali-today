@@ -25,8 +25,14 @@ function getISTHour(): number {
   return ist.getHours() + ist.getMinutes() / 60
 }
 
-function getISTTime(): string {
+function getISTDateTime(): { date: string; time: string } {
   const now = new Date()
+  const date = now.toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
   const time = now.toLocaleTimeString('en-IN', {
     timeZone: 'Asia/Kolkata',
     hour: '2-digit',
@@ -34,13 +40,7 @@ function getISTTime(): string {
     second: '2-digit',
     hour12: true,
   })
-  const date = now.toLocaleDateString('en-IN', {
-    timeZone: 'Asia/Kolkata',
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  })
-  return `${date} · ${time}`
+  return { date, time }
 }
 
 function getScene(h: number, wxCode: number): string {
@@ -58,7 +58,7 @@ function getScene(h: number, wxCode: number): string {
 
 // ─── COMPONENT ───────────────────────────────────────────────────────
 export default function SnowChecker() {
-  const [time, setTime] = useState('')
+  const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day-cloudy')
   const [weather, setWeather] = useState<WeatherData | null>(null)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -66,8 +66,8 @@ export default function SnowChecker() {
   const snowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setTime(getISTTime())
-    const t = setInterval(() => setTime(getISTTime()), 1000)
+    setDateTime(getISTDateTime())
+    const t = setInterval(() => setDateTime(getISTDateTime()), 1000)
     return () => clearInterval(t)
   }, [])
 
@@ -145,6 +145,7 @@ export default function SnowChecker() {
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
         html, body { height:100%; overflow:hidden; font-family:var(--font-inter), sans-serif }
 
+        /* ─── BACKGROUNDS ─── */
         .bg-stack { position:fixed; inset:0; z-index:0 }
         .bg-img {
           position:absolute; inset:0;
@@ -152,7 +153,7 @@ export default function SnowChecker() {
           opacity:0; transition:opacity 3s cubic-bezier(0.4,0,0.2,1);
         }
         .bg-img.on { opacity:1 }
-        .grade { position:absolute; inset:0; transition:opacity 3s ease }
+        .grade { position:absolute; inset:0 }
         .vignette {
           position:absolute; inset:0;
           background:radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.55) 100%);
@@ -164,11 +165,13 @@ export default function SnowChecker() {
           z-index:1; pointer-events:none;
         }
 
+        /* ─── STARS ─── */
         .starfield { position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0; transition:opacity 3s ease }
         .starfield.on { opacity:1 }
         .star { position:absolute; border-radius:50%; background:#fff; animation:twinkle ease-in-out infinite }
         @keyframes twinkle { 0%,100%{opacity:.9} 50%{opacity:.2} }
 
+        /* ─── SNOW ─── */
         .snowfield { position:fixed; inset:0; z-index:3; pointer-events:none; opacity:0; transition:opacity 2s ease }
         .snowfield.on { opacity:1 }
         .flake { position:absolute; border-radius:50%; background:rgba(215,230,255,0.8); animation:snowfall linear infinite }
@@ -178,20 +181,20 @@ export default function SnowChecker() {
           100%{transform:translateY(105vh) translateX(35px) rotate(360deg);opacity:0}
         }
 
-        /* ─── TOP HEADER ─── */
+        /* ─── HEADER ─── */
         .header {
           position:fixed; top:0; left:0; right:0; z-index:20;
-          padding:1.1rem 1.75rem 0.9rem;
-          display:flex; flex-direction:column; align-items:center; gap:0.6rem;
-          background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 100%);
+          padding:1.25rem 2rem 1.1rem;
+          display:flex; flex-direction:column; align-items:center; gap:1rem;
+          background:linear-gradient(to bottom,rgba(0,0,0,0.52) 0%,transparent 100%);
         }
 
-        /* Row 1: location left, weather right */
+        /* Top row */
         .header-row {
           width:100%; display:flex; align-items:center; justify-content:space-between;
         }
         .location-pill {
-          display:flex; align-items:center; gap:6px;
+          display:flex; align-items:center; gap:7px;
           font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase;
           color:rgba(255,255,255,0.6); white-space:nowrap;
         }
@@ -203,94 +206,144 @@ export default function SnowChecker() {
           0%,100%{box-shadow:0 0 0 0 rgba(72,217,192,.5)}
           50%{box-shadow:0 0 0 5px rgba(72,217,192,0)}
         }
-        .weather-data { display:flex; align-items:center; gap:1.5rem }
+        .weather-data { display:flex; align-items:center; gap:1.75rem }
         .wx-item { text-align:right }
-        .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.9); letter-spacing:.02em }
-        .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-top:1px }
+        .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.88); letter-spacing:.02em }
+        .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:1px }
 
-        /* Row 2: frosted glass nav pill */
+        /* ─── FROSTED GLASS NAV ─── */
         .nav-pill {
-          display:flex; align-items:center; gap:0;
-          background:rgba(255,255,255,0.08);
-          backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-          border:1px solid rgba(255,255,255,0.12);
+          display:flex; align-items:center;
+          background:rgba(255,255,255,0.07);
+          backdrop-filter:blur(40px) saturate(180%);
+          -webkit-backdrop-filter:blur(40px) saturate(180%);
+          border:1px solid rgba(255,255,255,0.14);
           border-radius:100px;
-          padding:0 4px;
-          overflow:hidden;
+          padding:4px;
+          box-shadow:
+            0 8px 32px rgba(0,0,0,0.24),
+            inset 0 1px 0 rgba(255,255,255,0.1);
         }
         .nav-link {
-          font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
-          color:rgba(255,255,255,0.55);
+          font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+          color:rgba(255,255,255,0.5);
           text-decoration:none;
-          padding:6px 16px;
+          padding:8px 22px;
           border-radius:100px;
-          transition:color .2s ease, background .2s ease;
+          transition:color .2s ease, background .25s ease, box-shadow .25s ease;
           white-space:nowrap;
         }
-        .nav-link:hover { color:rgba(255,255,255,0.9) }
+        .nav-link:hover {
+          color:rgba(255,255,255,0.85);
+          background:rgba(255,255,255,0.07);
+        }
         .nav-link.active {
-          color:rgba(255,255,255,0.95);
-          background:rgba(255,255,255,0.12);
+          color:#fff;
+          background:rgba(255,255,255,0.15);
+          box-shadow:
+            0 2px 12px rgba(0,0,0,0.2),
+            inset 0 1px 0 rgba(255,255,255,0.15);
         }
         .nav-divider {
-          width:1px; height:12px;
-          background:rgba(255,255,255,0.15);
-          flex-shrink:0;
-        }
-
-        /* Row 3: live timestamp */
-        .live-timestamp {
-          display:flex; align-items:center; gap:7px;
-        }
-        .live-badge {
-          display:flex; align-items:center; gap:4px;
-        }
-        .live-dot-small {
-          width:5px; height:5px; border-radius:50%;
-          background:#a8e6cf;
-          animation:pulse-soft 2.5s ease-in-out infinite;
-        }
-        @keyframes pulse-soft {
-          0%,100%{box-shadow:0 0 0 0 rgba(168,230,207,.5)}
-          50%{box-shadow:0 0 0 4px rgba(168,230,207,0)}
-        }
-        .live-label {
-          font-size:7.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase;
-          color:rgba(168,230,207,0.8);
-        }
-        .live-sep {
-          width:1px; height:10px; background:rgba(255,255,255,0.15);
-        }
-        .live-time {
-          font-family:var(--font-cormorant), serif;
-          font-size:13px; font-weight:300;
-          color:rgba(255,255,255,0.7);
-          letter-spacing:.06em; white-space:nowrap;
+          width:1px; height:14px;
+          background:rgba(255,255,255,0.12);
+          flex-shrink:0; margin:0 2px;
         }
 
         /* ─── PAGE ─── */
         .page {
           position:fixed; inset:0; z-index:10;
           display:flex; flex-direction:column; align-items:center; justify-content:center;
-          padding:0 1.5rem; padding-top:110px; padding-bottom:90px;
+          padding:0 1.5rem; padding-top:120px; padding-bottom:90px;
         }
-
         .content { text-align:center; max-width:600px; width:100% }
-        .tagline { font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,0.42); margin-bottom:1.6rem }
-        .headline { font-family:var(--font-cormorant), serif; font-weight:300; font-size:clamp(3rem,8.5vw,6rem); line-height:1.02; letter-spacing:-.02em; color:rgba(255,255,255,0.96); text-shadow:0 4px 40px rgba(0,0,0,0.35); margin-bottom:2.5rem }
+        .tagline {
+          font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+          color:rgba(255,255,255,0.38); margin-bottom:1.6rem;
+        }
+        .headline {
+          font-family:var(--font-cormorant), serif; font-weight:300;
+          font-size:clamp(3rem,8.5vw,6rem);
+          line-height:1.02; letter-spacing:-.02em;
+          color:rgba(255,255,255,0.96);
+          text-shadow:0 4px 40px rgba(0,0,0,0.35);
+          margin-bottom:2.5rem;
+        }
         .headline em { font-style:italic; color:#fff }
 
-        .answer-wrap { min-height:100px; display:flex; align-items:center; justify-content:center; margin-bottom:1.8rem }
-        .answer-inner { display:none; flex-direction:column; align-items:center; gap:8px; animation:rise .8s cubic-bezier(.22,1,.36,1) both }
+        /* ─── ANSWER ─── */
+        .answer-wrap {
+          min-height:100px; display:flex; align-items:center; justify-content:center;
+          margin-bottom:1rem;
+        }
+        .answer-inner {
+          display:none; flex-direction:column; align-items:center; gap:10px;
+          animation:rise .8s cubic-bezier(.22,1,.36,1) both;
+        }
         .answer-inner.show { display:flex }
         @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
-        .answer-word { font-family:var(--font-cormorant), serif; font-size:clamp(7rem,22vw,11rem); font-weight:300; line-height:1; letter-spacing:-.04em; text-shadow:0 8px 60px rgba(0,0,0,0.28) }
+        .answer-word {
+          font-family:var(--font-cormorant), serif;
+          font-size:clamp(7rem,22vw,11rem);
+          font-weight:300; line-height:1; letter-spacing:-.04em;
+          text-shadow:0 8px 60px rgba(0,0,0,0.28);
+        }
         .answer-word.yes { color:#c6e3ff }
         .answer-word.no { color:#ffd9a6 }
-        .answer-sub { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,0.38) }
-        .snow-history { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.32); margin-top:.6rem }
-        .snow-history span { color:rgba(255,255,255,0.55); font-weight:500 }
+
+        .answer-sub {
+          font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+          color:rgba(255,255,255,0.38);
+        }
+
+        /* ─── LIVE TIMESTAMP (below answer) ─── */
+        .answer-timestamp {
+          display:flex; align-items:center; gap:8px;
+          margin-top:4px;
+        }
+        .ts-badge {
+          display:flex; align-items:center; gap:4px;
+        }
+        .ts-dot {
+          width:5px; height:5px; border-radius:50%;
+          background:#a8e6cf;
+          animation:pulse-soft 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-soft {
+          0%,100%{box-shadow:0 0 0 0 rgba(168,230,207,.6)}
+          50%{box-shadow:0 0 0 4px rgba(168,230,207,0)}
+        }
+        .ts-live {
+          font-size:7.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase;
+          color:rgba(168,230,207,0.85);
+        }
+        .ts-sep {
+          width:1px; height:10px;
+          background:rgba(255,255,255,0.18);
+        }
+        .ts-date {
+          font-family:var(--font-cormorant), serif;
+          font-size:14px; font-weight:300;
+          color:rgba(255,255,255,0.55);
+          letter-spacing:.05em; white-space:nowrap;
+        }
+        .ts-dot-mid {
+          color:rgba(255,255,255,0.25);
+          font-size:12px;
+        }
+        .ts-time {
+          font-family:var(--font-cormorant), serif;
+          font-size:14px; font-weight:300;
+          color:rgba(255,255,255,0.75);
+          letter-spacing:.05em; white-space:nowrap;
+        }
+
+        .snow-history {
+          font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+          color:rgba(255,255,255,0.28); margin-top:.2rem;
+        }
+        .snow-history span { color:rgba(255,255,255,0.5); font-weight:500 }
 
         /* ─── BOTTOM BAR ─── */
         .wx-bar {
@@ -301,29 +354,41 @@ export default function SnowChecker() {
         }
         .wx-stats { display:flex; gap:2rem; align-items:flex-end }
         .wx-stat { line-height:1.2 }
-        .wx-stat-val { font-family:var(--font-cormorant), serif; font-size:1.5rem; font-weight:300; color:rgba(255,255,255,0.85) }
+        .wx-stat-val {
+          font-family:var(--font-cormorant), serif;
+          font-size:1.5rem; font-weight:300; color:rgba(255,255,255,0.85);
+        }
         .wx-stat-unit { font-size:.75rem; color:rgba(255,255,255,0.5) }
-        .wx-stat-lbl { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,0.32); margin-top:2px }
-        .footer-sig { font-family:var(--font-cormorant), serif; font-style:italic; font-size:13px; font-weight:300; color:rgba(255,255,255,0.28); letter-spacing:.04em; text-align:right; line-height:1.5 }
+        .wx-stat-lbl {
+          font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+          color:rgba(255,255,255,0.32); margin-top:2px;
+        }
+        .footer-sig {
+          font-family:var(--font-cormorant), serif;
+          font-style:italic; font-size:13px; font-weight:300;
+          color:rgba(255,255,255,0.28); letter-spacing:.04em;
+          text-align:right; line-height:1.5;
+        }
         .footer-sig strong { font-style:normal; font-weight:400; color:rgba(255,255,255,0.42) }
 
         /* ─── MOBILE ─── */
         @media(max-width:600px) {
-          .header { padding:0.85rem 1.1rem 0.7rem; gap:0.5rem }
+          .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
           .location-pill { font-size:9px; letter-spacing:.12em }
 
-          .nav-link { font-size:9px; padding:5px 12px; letter-spacing:.1em }
-
-          .live-time { font-size:11.5px }
-          .live-label { font-size:7px }
+          .nav-pill { padding:3px }
+          .nav-link { font-size:9.5px; padding:7px 14px; letter-spacing:.09em }
 
           .page { padding-top:105px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1rem }
           .headline { font-size:clamp(2.6rem,11vw,4rem); margin-bottom:1.4rem }
           .answer-word { font-size:clamp(5.5rem,22vw,7.5rem) }
-          .answer-sub { font-size:9px; letter-spacing:.16em }
-          .snow-history { font-size:10px }
+          .answer-sub { font-size:9px }
+
+          .ts-date { font-size:12px }
+          .ts-time { font-size:12px }
+          .ts-live { font-size:7px }
 
           .wx-bar { padding:0.9rem 1.1rem }
           .wx-stats { gap:1.1rem }
@@ -356,12 +421,11 @@ export default function SnowChecker() {
       {/* Stars */}
       <div ref={starsRef} className={`starfield${scene === 'night' ? ' on' : ''}`} />
 
-      {/* Snow particles */}
+      {/* Snow */}
       <div ref={snowRef} className={`snowfield${IS_SNOWING ? ' on' : ''}`} />
 
       {/* Header */}
       <header className="header">
-        {/* Row 1 — location + weather */}
         <div className="header-row">
           <div className="location-pill">
             <span className="live-dot" />
@@ -383,7 +447,6 @@ export default function SnowChecker() {
           </div>
         </div>
 
-        {/* Row 2 — frosted glass nav */}
         <nav className="nav-pill">
           <Link href="/" className="nav-link active">❄ Snow</Link>
           <div className="nav-divider" />
@@ -391,16 +454,6 @@ export default function SnowChecker() {
           <div className="nav-divider" />
           <Link href="/rohtang-pass" className="nav-link">Rohtang Pass</Link>
         </nav>
-
-        {/* Row 3 — live timestamp */}
-        <div className="live-timestamp">
-          <div className="live-badge">
-            <span className="live-dot-small" />
-            <span className="live-label">Live</span>
-          </div>
-          <div className="live-sep" />
-          <div className="live-time">{time}</div>
-        </div>
       </header>
 
       {/* Hero */}
@@ -416,6 +469,19 @@ export default function SnowChecker() {
                 {IS_SNOWING ? 'Yes.' : 'No.'}
               </div>
               <div className="answer-sub">{answerSub}</div>
+
+              {/* Live timestamp below the answer */}
+              <div className="answer-timestamp">
+                <div className="ts-badge">
+                  <span className="ts-dot" />
+                  <span className="ts-live">Live</span>
+                </div>
+                <div className="ts-sep" />
+                <span className="ts-date">{dateTime.date}</span>
+                <span className="ts-dot-mid">·</span>
+                <span className="ts-time">{dateTime.time}</span>
+              </div>
+
               {!IS_SNOWING && (
                 <div className="snow-history">
                   Last snowfall: <span>{LAST_SNOWED}</span>
