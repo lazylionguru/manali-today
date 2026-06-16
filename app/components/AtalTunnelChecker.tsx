@@ -345,7 +345,7 @@ export default function AtalTunnelChecker() {
       {/* Background */}
       <div className="bg-stack">
         <div className={`bg-img on`}
-  style={{ backgroundImage: `url('/bg-atal-tunnel.jpg')`, backgroundPosition: 'center 85%' }}>
+  style={{ backgroundImage: `url('/bg-atal-tunnel.jpg')`, backgroundPosition: 'center 100%' }}>
   <div className="grade" style={{ background: 'rgba(0,8,20,0.45)' }} />
 </div>
         <div className="vignette" />
