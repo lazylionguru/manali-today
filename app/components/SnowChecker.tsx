@@ -30,12 +30,14 @@ function getISTTime(): string {
     timeZone: 'Asia/Kolkata',
     hour: '2-digit',
     minute: '2-digit',
+    second: '2-digit',
     hour12: true,
   })
   const date = now.toLocaleDateString('en-IN', {
     timeZone: 'Asia/Kolkata',
     day: 'numeric',
     month: 'short',
+    year: 'numeric',
   })
   return `${date} · ${time}`
 }
@@ -62,14 +64,14 @@ export default function SnowChecker() {
   const starsRef = useRef<HTMLDivElement>(null)
   const snowRef = useRef<HTMLDivElement>(null)
 
-  // Clock
+  // Clock — updates every second
   useEffect(() => {
     setTime(getISTTime())
     const t = setInterval(() => setTime(getISTTime()), 1000)
     return () => clearInterval(t)
   }, [])
 
-  // Scene (updates every minute)
+  // Scene
   useEffect(() => {
     const update = () => {
       const wxCode = weather?.wxCode ?? 800
@@ -187,21 +189,50 @@ export default function SnowChecker() {
           padding:0 1.5rem; padding-top:80px; padding-bottom:90px;
         }
 
+        /* ─── TOP BAR ─── */
         .weather-strip {
           position:fixed; top:0; left:0; right:0; z-index:20;
-          padding:1.25rem 1.75rem;
+          padding:1.1rem 1.75rem;
           display:flex; align-items:center; justify-content:space-between;
           background:linear-gradient(to bottom,rgba(0,0,0,0.45) 0%,transparent 100%);
         }
-        .location-pill { display:flex; align-items:center; gap:6px; font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,0.6); white-space:nowrap }
-        .live-dot { width:6px; height:6px; border-radius:50%; background:#48d9c0; flex-shrink:0; animation:pulse 2.5s ease-in-out infinite }
-        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(72,217,192,.5)} 50%{box-shadow:0 0 0 5px rgba(72,217,192,0)} }
+        .location-pill {
+          display:flex; align-items:center; gap:6px;
+          font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase;
+          color:rgba(255,255,255,0.6); white-space:nowrap;
+        }
+        .live-dot {
+          width:6px; height:6px; border-radius:50%; background:#48d9c0; flex-shrink:0;
+          animation:pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+          0%,100%{box-shadow:0 0 0 0 rgba(72,217,192,.5)}
+          50%{box-shadow:0 0 0 5px rgba(72,217,192,0)}
+        }
+
+        /* ─── CENTERED LIVE TIMESTAMP ─── */
+        .live-timestamp {
+          position:absolute; left:50%; transform:translateX(-50%);
+          display:flex; flex-direction:column; align-items:center; gap:3px;
+        }
+        .live-timestamp-badge {
+          display:flex; align-items:center; gap:5px;
+        }
+        .live-label {
+          font-size:8px; font-weight:500; letter-spacing:.25em; text-transform:uppercase;
+          color:rgba(72,217,192,0.85);
+        }
+        .live-time {
+          font-family:var(--font-cormorant), serif;
+          font-size:14px; font-weight:300;
+          color:rgba(255,255,255,0.82);
+          letter-spacing:.06em; white-space:nowrap;
+        }
 
         .weather-data { display:flex; align-items:center; gap:1.5rem }
         .wx-item { text-align:right }
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.9); letter-spacing:.02em }
         .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-top:1px }
-        .time-display { font-family:var(--font-cormorant), serif; font-size:15px; font-weight:300; color:rgba(255,255,255,0.7); letter-spacing:.04em; white-space:nowrap }
 
         .content { text-align:center; max-width:600px; width:100% }
         .tagline { font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,0.42); margin-bottom:1.6rem }
@@ -239,7 +270,7 @@ export default function SnowChecker() {
           .weather-data .wx-item { display:none }
           .weather-data { gap:0 }
           .location-pill { font-size:9.5px; letter-spacing:.13em }
-          .time-display { font-size:14px }
+          .live-timestamp { display:none }
           .page { padding-top:72px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1rem }
           .headline { font-size:clamp(2.6rem,11vw,4rem); margin-bottom:1.4rem }
@@ -258,16 +289,16 @@ export default function SnowChecker() {
       {/* Backgrounds */}
       <div className="bg-stack">
         {['night','sunrise','day-sunny','day-cloudy','day-clear','sunset'].map(id => (
-          <div key={id} id={`bg-${id}`} className={`bg-img${scene === id ? ' on' : ''}`}
+          <div key={id} className={`bg-img${scene === id ? ' on' : ''}`}
             style={{ backgroundImage: `url('/bg-${id}.png')` }}>
-            <div className="grade" style={{ background: {
+            <div className="grade" style={{ background: ({
               'night':     'rgba(4,10,30,0.38)',
               'sunrise':   'rgba(15,5,0,0.28)',
               'day-sunny': 'rgba(0,10,25,0.18)',
               'day-cloudy':'rgba(8,15,20,0.32)',
               'day-clear': 'rgba(0,8,20,0.22)',
               'sunset':    'rgba(20,5,0,0.25)',
-            }[id] }} />
+            } as Record<string,string>)[id] }} />
           </div>
         ))}
         <div className="vignette" />
@@ -286,6 +317,15 @@ export default function SnowChecker() {
           <span className="live-dot" />
           Manali · Kullu Valley · 2050m
         </div>
+
+        <div className="live-timestamp">
+          <div className="live-timestamp-badge">
+            <span className="live-dot" />
+            <span className="live-label">Live</span>
+          </div>
+          <div className="live-time">{time}</div>
+        </div>
+
         <div className="weather-data">
           <div className="wx-item">
             <div className="wx-val">{weather?.temp ?? '—'}</div>
@@ -299,7 +339,6 @@ export default function SnowChecker() {
             <div className="wx-val">{weather?.feels ?? '—'}</div>
             <div className="wx-label">Feels like</div>
           </div>
-          <div className="time-display">{time}</div>
         </div>
       </div>
 
@@ -345,7 +384,7 @@ export default function SnowChecker() {
         <div className="footer-sig">
           Updated by someone<br />who <strong>lives here</strong><br />
           <span style={{ fontSize:'11px', color:'rgba(255,255,255,0.18)', letterSpacing:'.1em', fontStyle:'normal' }}>
-            Built with love in Manali ♥
+            Built with ♥ in Manali 
           </span>
         </div>
       </div>
