@@ -214,70 +214,62 @@ export default function SnowChecker() {
         /* ─── FROSTED GLASS NAV ─── */
         .nav-pill {
   display:flex; align-items:center;
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(60px) saturate(200%) brightness(1.1);
-  -webkit-backdrop-filter:blur(60px) saturate(200%) brightness(1.1);
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
+  -webkit-backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
   border-radius:100px;
-  padding:4px;
-  /* outer shadow for depth */
+  padding:3px;
+  border:1px solid rgba(255,255,255,0.28);
   box-shadow:
-    0 4px 24px rgba(0,0,0,0.18),
-    0 1px 0 rgba(255,255,255,0.0) inset;
-  /* the key: two borders — top specular highlight, full subtle border */
-  border:1px solid rgba(255,255,255,0.18);
+    0 2px 20px rgba(0,0,0,0.12),
+    inset 0 0.5px 0 rgba(255,255,255,0.35);
   position:relative;
   overflow:hidden;
 }
-/* specular highlight — the top light catch */
 .nav-pill::before {
   content:'';
   position:absolute;
-  top:0; left:8%; right:8%;
+  top:0; left:5%; right:5%;
   height:1px;
   background:linear-gradient(
     to right,
     transparent,
-    rgba(255,255,255,0.55) 30%,
-    rgba(255,255,255,0.55) 70%,
+    rgba(255,255,255,0.7) 25%,
+    rgba(255,255,255,0.7) 75%,
     transparent
   );
-  border-radius:100px;
 }
-/* inner glow at the very top */
 .nav-pill::after {
   content:'';
   position:absolute;
-  top:0; left:0; right:0;
-  height:40%;
-  background:linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+  top:0; left:0; right:0; height:50%;
+  background:linear-gradient(to bottom, rgba(255,255,255,0.06), transparent);
   border-radius:100px 100px 0 0;
   pointer-events:none;
 }
-        .nav-link {
-          font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
-          color:rgba(255,255,255,0.5);
-          text-decoration:none;
-          padding:8px 22px;
-          border-radius:100px;
-          transition:color .2s ease, background .25s ease, box-shadow .25s ease;
-          white-space:nowrap;
-        }
-        .nav-link:hover {
-          color:rgba(255,255,255,0.85);
-          background:rgba(255,255,255,0.07);
-        }
-        .nav-link.active {
-          color:#fff;
-          background:rgba(255,255,255,0.15);
-          box-shadow:
-            0 2px 12px rgba(0,0,0,0.2),
-            inset 0 1px 0 rgba(255,255,255,0.15);
-        }
-        .nav-divider {
-          width:1px; height:14px;
-          background:rgba(255,255,255,0.12);
-          flex-shrink:0; margin:0 2px;
-        }
+.nav-link {
+  font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+  text-decoration:none;
+  padding:8px 22px;
+  border-radius:100px;
+  transition:color .2s ease, background .25s ease;
+  white-space:nowrap;
+  position:relative; z-index:1;
+}
+.nav-link:hover { color:rgba(255,255,255,0.8) }
+.nav-link.active {
+  color:#fff;
+  background:rgba(255,255,255,0.18);
+  box-shadow:
+    0 1px 8px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.nav-divider {
+  width:1px; height:14px;
+  background:rgba(255,255,255,0.2);
+  flex-shrink:0; margin:0 1px;
+}
 
         /* ─── PAGE ─── */
         .page {
