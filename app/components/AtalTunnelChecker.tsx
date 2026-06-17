@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Footer from './Footer'
 
 // ─── CONFIG ───────────────────────────────────────────────────────────
 const TUNNEL_STATUS: 'open' | 'closed' | 'awd' = 'open'
@@ -455,6 +456,7 @@ export default function AtalTunnelChecker() {
           </span>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
