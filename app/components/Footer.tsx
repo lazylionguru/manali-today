@@ -11,7 +11,7 @@ export default function Footer() {
           right: 0; 
           z-index: 20;
           width: 100%;
-          padding: 1rem 2.5rem 0.85rem;
+          padding: 1rem 2.5rem;
           box-sizing: border-box;
           color: #fff;
           background: linear-gradient(180deg, rgba(25, 25, 30, 0.15) 0%, rgba(15, 15, 20, 0.4) 100%);
@@ -40,38 +40,17 @@ export default function Footer() {
           pointer-events: none;
         }
 
-        .footer-explore {
+        .footer-row {
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 2.5rem;
-          margin-bottom: 0.85rem;
-        }
-        .footer-explore a {
-          font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.45);
-          text-decoration: none;
-          transition: color .2s ease;
-        }
-        .footer-explore a:hover { color: rgba(255, 255, 255, 0.8) }
-        .footer-explore a.soon {
-          color: rgba(255, 255, 255, 0.2);
-          pointer-events: none;
-        }
-        .footer-explore a.soon::after {
-          content: ' —';
-          color: rgba(255, 255, 255, 0.12);
+          justify-content: space-between;
         }
 
-        .footer-bottom {
-          display: flex; align-items: center; justify-content: space-between;
-          padding-top: 0.7rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
-        }
         .footer-credit {
           font-family: var(--font-cormorant), serif;
           font-size: 12px; font-weight: 300; font-style: italic;
-          color: rgba(255, 255, 255, 0.35); line-height: 1.4;
+          color: rgba(255, 255, 255, 0.35);
+          white-space: nowrap;
         }
         .footer-credit a {
           color: rgba(255, 255, 255, 0.5);
@@ -83,34 +62,60 @@ export default function Footer() {
           color: rgba(255, 255, 255, 0.9);
           border-color: rgba(255, 255, 255, 0.5);
         }
+
+        .footer-explore {
+          display: flex;
+          align-items: center;
+          gap: 2.5rem;
+        }
+        .footer-explore a {
+          font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.45);
+          text-decoration: none;
+          transition: color .2s ease;
+          white-space: nowrap;
+        }
+        .footer-explore a:hover { color: rgba(255, 255, 255, 0.8) }
+        .footer-explore a.soon {
+          color: rgba(255, 255, 255, 0.2);
+          pointer-events: none;
+        }
+        .footer-explore a.soon::after {
+          content: ' —';
+          color: rgba(255, 255, 255, 0.12);
+        }
+
         .footer-love {
           font-family: var(--font-cormorant), serif;
           font-size: 12px; font-weight: 300; font-style: italic;
           color: rgba(255, 255, 255, 0.3);
+          white-space: nowrap;
         }
 
         @media(max-width: 600px) {
-          .footer { padding: 0.85rem 1.1rem 0.75rem }
-          .footer-explore { gap: 1.25rem; flex-wrap: wrap }
+          .footer { padding: 0.85rem 1.1rem }
+          .footer-row { flex-direction: column; gap: 0.6rem }
+          .footer-explore { gap: 1.25rem; order: -1 }
           .footer-explore a { font-size: 9.5px }
-          .footer-bottom { flex-direction: column; align-items: flex-start; gap: 4px }
+          .footer-credit { font-size: 10.5px }
           .footer-love { display: none }
         }
       `}</style>
 
       <footer className="footer">
-        <div className="footer-explore">
-          <a href="/guide" className="soon">Local Guide</a>
-          <a href="/places" className="soon">Places we love</a>
-          <a href="/blog" className="soon">Blog</a>
-        </div>
-
-        <div className="footer-bottom">
+        <div className="footer-row">
           <div className="footer-credit">
             Updated in real-time by{' '}
             <a href="https://narender.xyz" target="_blank" rel="noopener noreferrer">someone</a>
             {' '}who lives here
           </div>
+
+          <div className="footer-explore">
+            <a href="/guide" className="soon">Local Guide</a>
+            <a href="/places" className="soon">Places we love</a>
+            <a href="/blog" className="soon">Blog</a>
+          </div>
+
           <div className="footer-love">Built with 🩶 in Manali</div>
         </div>
       </footer>
