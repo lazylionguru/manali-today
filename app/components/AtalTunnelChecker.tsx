@@ -308,7 +308,7 @@ export default function AtalTunnelChecker() {
 
         /* ─── BOTTOM BAR ─── */
         .wx-bar {
-          position:fixed; bottom:68px; left:0; right:0; z-index:19;
+          position:fixed; bottom:55px; left:0; right:0; z-index:19;
           padding:1.2rem 2.5rem;
           background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
           display:flex; align-items:flex-end; justify-content:space-between;
