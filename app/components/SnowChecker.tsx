@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Footer from './Footer'
 
 const IS_SNOWING = false
-const LAST_SNOWED = '21 March 2026'
+const LAST_SNOWED = '12 June 2026'
 
 interface WeatherData {
   temp: string
@@ -311,6 +311,25 @@ export default function SnowChecker() {
         }
         .snow-history span { color:rgba(255,255,255,0.55); font-weight:500 }
 
+        /* ─── BOTTOM BAR ─── */
+        .wx-bar {
+          position:fixed; bottom:45px; left:0; right:0; z-index:19;
+          padding:1.2rem 2.5rem;
+          background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
+          display:flex; align-items:flex-end; justify-content:flex-start;
+        }
+        .wx-stats { display:flex; gap:2rem; align-items:flex-end }
+        .wx-stat { line-height:1.2 }
+        .wx-stat-val {
+          font-family:var(--font-cormorant), serif;
+          font-size:1.5rem; font-weight:300; color:rgba(255,255,255,0.85);
+        }
+        .wx-stat-unit { font-size:.75rem; color:rgba(255,255,255,0.5) }
+        .wx-stat-lbl {
+          font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+          color:rgba(255,255,255,0.32); margin-top:2px;
+        }
+
         @media(max-width:600px) {
           .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
@@ -323,6 +342,10 @@ export default function SnowChecker() {
           .answer-word { font-size:clamp(5.5rem,22vw,7.5rem) }
           .answer-sub { font-size:9px }
           .snow-history { font-size:10px }
+          .wx-bar { padding:0.9rem 1.1rem }
+          .wx-stats { gap:1.1rem }
+          .wx-stat-val { font-size:1.2rem }
+          .wx-stat-lbl { font-size:8px }
         }
       `}</style>
 
@@ -415,9 +438,25 @@ export default function SnowChecker() {
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer
-      />
+      {/* Bottom bar */}
+      <div className="wx-bar">
+        <div className="wx-stats">
+          <div className="wx-stat">
+            <div><span className="wx-stat-val">{weather?.wind ?? '—'}</span><span className="wx-stat-unit"> km/h</span></div>
+            <div className="wx-stat-lbl">Wind</div>
+          </div>
+          <div className="wx-stat">
+            <div><span className="wx-stat-val">{weather?.visibility ?? '—'}</span><span className="wx-stat-unit"> km</span></div>
+            <div className="wx-stat-lbl">Visibility</div>
+          </div>
+          <div className="wx-stat">
+            <div><span className="wx-stat-val">{weather?.description ?? '—'}</span></div>
+            <div className="wx-stat-lbl">Conditions</div>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
     </>
   )
 }

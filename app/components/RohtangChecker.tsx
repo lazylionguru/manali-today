@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Footer from './Footer'
 
 // ─── CONFIG ───────────────────────────────────────────────────────────
 const ROHTANG_STATUS: 'open' | 'closed' = 'open'
@@ -47,7 +48,7 @@ function getISTDateTime(): { date: string; time: string } {
 function isTuesdayIST(): boolean {
   const now = new Date()
   const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
-  return ist.getDay() === 2 // 2 = Tuesday
+  return ist.getDay() === 2
 }
 
 function getScene(h: number): string {
@@ -69,7 +70,6 @@ export default function RohtangChecker() {
   const [showAnswer, setShowAnswer] = useState(false)
   const starsRef = useRef<HTMLDivElement>(null)
 
-  // Auto-close on Tuesdays
   const isTuesday = isTuesdayIST()
   const effectiveStatus = isTuesday ? 'closed' : ROHTANG_STATUS
   const effectiveNote = isTuesday
@@ -337,10 +337,10 @@ export default function RohtangChecker() {
 
         /* ─── BOTTOM BAR ─── */
         .wx-bar {
-          position:fixed; bottom:0; left:0; right:0; z-index:20;
+          position:fixed; bottom:45px; left:0; right:0; z-index:19;
           padding:1.2rem 2.5rem;
           background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
-          display:flex; align-items:flex-end; justify-content:space-between;
+          display:flex; align-items:flex-end; justify-content:flex-start;
         }
         .wx-stats { display:flex; gap:2rem; align-items:flex-end }
         .wx-stat { line-height:1.2 }
@@ -353,13 +353,6 @@ export default function RohtangChecker() {
           font-size:9px; letter-spacing:.15em; text-transform:uppercase;
           color:rgba(255,255,255,0.32); margin-top:2px;
         }
-        .footer-sig {
-          font-family:var(--font-cormorant), serif;
-          font-style:italic; font-size:13px; font-weight:300;
-          color:rgba(255,255,255,0.28); letter-spacing:.04em;
-          text-align:right; line-height:1.5;
-        }
-        .footer-sig strong { font-style:normal; font-weight:400; color:rgba(255,255,255,0.42) }
 
         /* ─── MOBILE ─── */
         @media(max-width:600px) {
@@ -379,8 +372,6 @@ export default function RohtangChecker() {
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }
-          .footer-sig { font-size:11px; line-height:1.35 }
-          .footer-sig span { display:none }
         }
       `}</style>
 
@@ -448,12 +439,11 @@ export default function RohtangChecker() {
               <div className="answer-note">{status.note}</div>
 
               {/* Permit notice */}
-<div className="permit-notice">
-  <span className="permit-icon">📋</span>
-  <span className="permit-text">Permit required —</span>
-  <a href="https://rohtangpermits.hp.gov.in" target="_blank" rel="noopener noreferrer" className="permit-link">Book here</a>
-</div>
-              
+              <div className="permit-notice">
+                <span className="permit-icon">📋</span>
+                <span className="permit-text">Permit required —</span>
+                <a href="https://rohtangpermits.hp.gov.in" target="_blank" rel="noopener noreferrer" className="permit-link">Book here</a>
+              </div>
 
               <div className="answer-timestamp">
                 <div className="ts-badge">
@@ -490,13 +480,9 @@ export default function RohtangChecker() {
             <div className="wx-stat-lbl">Conditions</div>
           </div>
         </div>
-        <div className="footer-sig">
-          Updated by someone<br />who <strong>lives here</strong><br />
-          <span style={{ fontSize:'11px', color:'rgba(255,255,255,0.18)', letterSpacing:'.1em', fontStyle:'normal' }}>
-            Built with love in Manali ♥
-          </span>
-        </div>
       </div>
+
+      <Footer />
     </>
   )
 }
