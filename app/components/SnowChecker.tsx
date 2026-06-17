@@ -417,9 +417,6 @@ export default function SnowChecker() {
 
       {/* Footer */}
       <Footer
-        wind={weather?.wind}
-        visibility={weather?.visibility}
-        description={weather?.description}
       />
     </>
   )
