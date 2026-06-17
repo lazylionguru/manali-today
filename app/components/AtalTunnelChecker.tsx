@@ -308,11 +308,11 @@ export default function AtalTunnelChecker() {
 
         /* ─── BOTTOM BAR ─── */
         .wx-bar {
-          position:fixed; bottom:0; left:0; right:0; z-index:20;
-          padding:1.2rem 2.5rem;
-          background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
-          display:flex; align-items:flex-end; justify-content:space-between;
-        }
+  position:fixed; bottom:108px; left:0; right:0; z-index:19;
+  padding:1.2rem 2.5rem;
+  background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
+  display:flex; align-items:flex-end; justify-content:space-between;
+}
         .wx-stats { display:flex; gap:2rem; align-items:flex-end }
         .wx-stat { line-height:1.2 }
         .wx-stat-val {
