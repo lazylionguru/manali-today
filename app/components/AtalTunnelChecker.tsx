@@ -1,15 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import Footer from './Footer'
+import Nav from './Nav'
 
-// ─── CONFIG ───────────────────────────────────────────────────────────
 const TUNNEL_STATUS: 'open' | 'closed' | 'awd' = 'open'
 const LAST_UPDATED = '16 June 2026'
 const STATUS_NOTE = 'Clear conditions, tunnel operating normally'
 
-// ─── STATUS CONFIG ────────────────────────────────────────────────────
 const STATUS_MAP = {
   open: {
     word: 'Open.',
@@ -31,7 +29,6 @@ const STATUS_MAP = {
   },
 }
 
-// ─── HELPERS ─────────────────────────────────────────────────────────
 function getISTHour(): number {
   const now = new Date()
   const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
@@ -59,7 +56,6 @@ function getScene(h: number): string {
   return 'day'
 }
 
-// ─── COMPONENT ───────────────────────────────────────────────────────
 export default function AtalTunnelChecker() {
   const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day')
@@ -154,7 +150,6 @@ export default function AtalTunnelChecker() {
         .star { position:absolute; border-radius:50%; background:#fff; animation:twinkle ease-in-out infinite }
         @keyframes twinkle { 0%,100%{opacity:.9} 50%{opacity:.2} }
 
-        /* ─── HEADER ─── */
         .header {
           position:fixed; top:0; left:0; right:0; z-index:20;
           padding:1.25rem 2rem 1.1rem;
@@ -181,46 +176,6 @@ export default function AtalTunnelChecker() {
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.88); letter-spacing:.02em }
         .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:1px }
 
-        /* ─── NAV ─── */
-        .nav-pill {
-          display:flex; align-items:center;
-          background:rgba(255,255,255,0.02);
-          backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
-          -webkit-backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
-          border-radius:100px; padding:3px;
-          border:1px solid rgba(255,255,255,0.28);
-          box-shadow:0 2px 20px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.35);
-          position:relative; overflow:hidden;
-        }
-        .nav-pill::before {
-          content:''; position:absolute;
-          top:0; left:5%; right:5%; height:1px;
-          background:linear-gradient(to right, transparent, rgba(255,255,255,0.7) 25%, rgba(255,255,255,0.7) 75%, transparent);
-        }
-        .nav-pill::after {
-          content:''; position:absolute;
-          top:0; left:0; right:0; height:50%;
-          background:linear-gradient(to bottom, rgba(255,255,255,0.06), transparent);
-          border-radius:100px 100px 0 0; pointer-events:none;
-        }
-        .nav-link {
-          font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
-          color:rgba(255,255,255,0.45); text-decoration:none;
-          padding:8px 22px; border-radius:100px;
-          transition:color .2s ease, background .25s ease;
-          white-space:nowrap; position:relative; z-index:1;
-        }
-        .nav-link:hover { color:rgba(255,255,255,0.8) }
-        .nav-link.active {
-          color:#fff; background:rgba(255,255,255,0.18);
-          box-shadow:0 1px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-        .nav-divider {
-          width:1px; height:14px; background:rgba(255,255,255,0.2);
-          flex-shrink:0; margin:0 1px;
-        }
-
-        /* ─── PAGE ─── */
         .page {
           position:fixed; inset:0; z-index:10;
           display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -242,7 +197,6 @@ export default function AtalTunnelChecker() {
         }
         .headline em { font-style:italic; color:#fff }
 
-        /* ─── ANSWER ─── */
         .answer-wrap {
           display:flex; align-items:center; justify-content:center;
           margin-bottom:1rem;
@@ -270,7 +224,6 @@ export default function AtalTunnelChecker() {
           color:rgba(255,255,255,0.45);
         }
 
-        /* ─── TIMESTAMP ─── */
         .answer-timestamp {
           display:flex; align-items:center; gap:8px;
         }
@@ -306,12 +259,11 @@ export default function AtalTunnelChecker() {
         }
         .last-updated span { color:rgba(255,255,255,0.5); font-weight:500 }
 
-        /* ─── BOTTOM BAR ─── */
         .wx-bar {
           position:fixed; bottom:45px; left:0; right:0; z-index:19;
           padding:1.2rem 2.5rem;
           background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 100%);
-          display:flex; align-items:flex-end; justify-content:space-between;
+          display:flex; align-items:flex-end; justify-content:flex-start;
         }
         .wx-stats { display:flex; gap:2rem; align-items:flex-end }
         .wx-stat { line-height:1.2 }
@@ -325,13 +277,10 @@ export default function AtalTunnelChecker() {
           color:rgba(255,255,255,0.32); margin-top:2px;
         }
 
-        /* ─── MOBILE ─── */
         @media(max-width:600px) {
           .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
           .location-pill { font-size:9px; letter-spacing:.12em }
-          .nav-pill { padding:3px }
-          .nav-link { font-size:9.5px; padding:7px 14px; letter-spacing:.09em }
           .page { padding-top:105px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1.2rem }
           .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.8rem }
@@ -383,13 +332,7 @@ export default function AtalTunnelChecker() {
           </div>
         </div>
 
-        <nav className="nav-pill">
-          <Link href="/" className="nav-link">❄ Snow</Link>
-          <div className="nav-divider" />
-          <Link href="/atal-tunnel" className="nav-link active">Atal Tunnel</Link>
-          <div className="nav-divider" />
-          <Link href="/rohtang-pass" className="nav-link">Rohtang Pass</Link>
-        </nav>
+        <Nav active="atal-tunnel" />
       </header>
 
       {/* Hero */}

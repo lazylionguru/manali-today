@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import Footer from './Footer'
+import Nav from './Nav'
 
 const IS_SNOWING = false
 const LAST_SNOWED = '12 June 2026'
@@ -196,44 +196,6 @@ export default function SnowChecker() {
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.88); letter-spacing:.02em }
         .wx-label { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:1px }
 
-        .nav-pill {
-          display:flex; align-items:center;
-          background:rgba(255,255,255,0.02);
-          backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
-          -webkit-backdrop-filter:blur(80px) saturate(250%) brightness(1.15);
-          border-radius:100px; padding:3px;
-          border:1px solid rgba(255,255,255,0.28);
-          box-shadow:0 2px 20px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.35);
-          position:relative; overflow:hidden;
-        }
-        .nav-pill::before {
-          content:''; position:absolute;
-          top:0; left:5%; right:5%; height:1px;
-          background:linear-gradient(to right, transparent, rgba(255,255,255,0.7) 25%, rgba(255,255,255,0.7) 75%, transparent);
-        }
-        .nav-pill::after {
-          content:''; position:absolute;
-          top:0; left:0; right:0; height:50%;
-          background:linear-gradient(to bottom, rgba(255,255,255,0.06), transparent);
-          border-radius:100px 100px 0 0; pointer-events:none;
-        }
-        .nav-link {
-          font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
-          color:rgba(255,255,255,0.45); text-decoration:none;
-          padding:8px 22px; border-radius:100px;
-          transition:color .2s ease, background .25s ease;
-          white-space:nowrap; position:relative; z-index:1;
-        }
-        .nav-link:hover { color:rgba(255,255,255,0.8) }
-        .nav-link.active {
-          color:#fff; background:rgba(255,255,255,0.18);
-          box-shadow:0 1px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-        .nav-divider {
-          width:1px; height:14px; background:rgba(255,255,255,0.2);
-          flex-shrink:0; margin:0 1px;
-        }
-
         .page {
           position:fixed; inset:0; z-index:10;
           display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -311,7 +273,6 @@ export default function SnowChecker() {
         }
         .snow-history span { color:rgba(255,255,255,0.55); font-weight:500 }
 
-        /* ─── BOTTOM BAR ─── */
         .wx-bar {
           position:fixed; bottom:45px; left:0; right:0; z-index:19;
           padding:1.2rem 2.5rem;
@@ -334,8 +295,6 @@ export default function SnowChecker() {
           .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
           .location-pill { font-size:9px; letter-spacing:.12em }
-          .nav-pill { padding:3px }
-          .nav-link { font-size:9.5px; padding:7px 14px; letter-spacing:.09em }
           .page { padding-top:105px; padding-bottom:180px }
           .tagline { font-size:9px; margin-bottom:1rem }
           .headline { font-size:clamp(2.6rem,11vw,4rem); margin-bottom:1.4rem }
@@ -396,13 +355,7 @@ export default function SnowChecker() {
             </div>
           </div>
         </div>
-        <nav className="nav-pill">
-          <Link href="/" className="nav-link active">❄ Snow</Link>
-          <div className="nav-divider" />
-          <Link href="/atal-tunnel" className="nav-link">Atal Tunnel</Link>
-          <div className="nav-divider" />
-          <Link href="/rohtang-pass" className="nav-link">Rohtang Pass</Link>
-        </nav>
+        <Nav active="snow" />
       </header>
 
       {/* Hero */}
