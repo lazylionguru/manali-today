@@ -1,0 +1,17 @@
+# Manali.today
+
+> Real-time, locally-verified status checker for travel conditions in Manali, Himachal Pradesh, India — snowfall, Atal Tunnel, and Rohtang Pass. Status is updated in real-time by a resident with on-the-ground access, not an automated weather feed.
+
+## Real-Time Status Pages
+
+- [Is it snowing in Manali today?](https://manali.today/) — current snowfall status, last snowfall date, temperature, wind, visibility
+- [Is Atal Tunnel open today?](https://manali.today/is-atal-tunnel-open-today) — open/closed/AWD-only status, conditions, last updated
+- [Is Rohtang Pass open today?](https://manali.today/is-rohtang-pass-open-today) — open/closed status, permit information, last updated
+
+## About
+
+Manali.today is built and maintained by a resident of Manali. Status updates come from direct local knowledge of road, tunnel, and pass conditions, not scraped from a weather API. Weather data shown on each page (temperature, wind, visibility) is supplementary context only and does not determine the status shown.
+
+## Optional
+
+- [Rohtang Pass permit portal](https://rohtangpermits.hp.gov.in) — official Himachal Pradesh government permit system
