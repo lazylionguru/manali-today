@@ -12,7 +12,7 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
   return (
     <>
       <style>{`
-        /* 3D Glass Layer */
+        /* Apple-Spec Translucent Glass Layer */
         .footer {
           position: fixed; 
           bottom: 0; 
@@ -24,22 +24,27 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
           box-sizing: border-box;
           color: #fff;
           
-          /* Dark structural backing */
-          background: linear-gradient(180deg, rgba(25, 25, 30, 0.15) 0%, rgba(15, 15, 20, 0.4) 100%);
-          backdrop-filter: blur(35px);
-          -webkit-backdrop-filter: blur(35px);
+          /* Pure neutral matrix: No heavy color, just raw translucent opacity */
+          background: linear-gradient(
+            180deg, 
+            rgba(255, 255, 255, 0.03) 0%, 
+            rgba(0, 0, 0, 0.05) 100%
+          );
+          
+          /* The Core Engines: Heavy blur + color vibrancy amplification */
+          backdrop-filter: blur(40px) saturate(180%);
+          -webkit-backdrop-filter: blur(40px) saturate(180%);
           
           /* Physical 3D Lean Perspective */
           transform: perspective(1000px) rotateX(2deg);
           transform-origin: bottom center;
           
-          /* Multi-Layered Volumetric Shadows */
+          /* High-end specular edge lighting and drop shadows */
           box-shadow: 
-            0 -1px 0px rgba(255, 255, 255, 0.2),                     /* Subtle outer rim */
-            inset 0 1px 0px rgba(255, 255, 255, 0.15),                /* Glass edge thickness */
-            inset 0 15px 30px rgba(255, 255, 255, 0.03),              /* Top surface sheen */
-            0 -10px 30px rgba(0, 0, 0, 0.35),                         /* Ambient occlusion block */
-            0 -30px 70px rgba(0, 0, 0, 0.5);                          /* Deep background drop shadow */
+            0 -1px 0px rgba(255, 255, 255, 0.15),                     /* Razor thin outer rim */
+            inset 0 1px 0px rgba(255, 255, 255, 0.35),                /* Diamond-cut specular edge */
+            inset 0 15px 30px rgba(255, 255, 255, 0.02),              /* Ultra-faint surface sheen */
+            0 -10px 40px rgba(0, 0, 0, 0.25);                         /* Clean, soft background separation shadow */
             
           border: none;
         }
@@ -52,13 +57,14 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
           height: 1px;
           background: linear-gradient(
             90deg,
-            rgba(255,255,255,0.02) 0%,
-            rgba(255,255,255,0.4) 20%,
-            rgba(255,255,255,0.6) 50%,
-            rgba(255,255,255,0.4) 80%,
-            rgba(255,255,255,0.02) 100%
+            rgba(255,255,255,0.0) 0%,
+            rgba(255,255,255,0.3) 20%,
+            rgba(255,255,255,0.5) 50%,
+            rgba(255,255,255,0.3) 80%,
+            rgba(255,255,255,0.0) 100%
           );
           pointer-events: none;
+          opacity: 0.8;
         }
 
         .footer-top {
@@ -67,15 +73,15 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
           gap: 2rem;
           margin-bottom: 1.25rem;
           padding-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .footer-brand {
           font-family: var(--font-cormorant), serif;
           font-size: 15px; font-weight: 300; font-style: italic;
-          color: rgba(255, 255, 255, 0.85);
+          color: rgba(255, 255, 255, 0.9);
           margin-bottom: 0.6rem;
-          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
 
         .footer-wx {
@@ -84,37 +90,37 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
         .footer-wx-val {
           font-family: var(--font-cormorant), serif;
           font-size: 1.1rem; font-weight: 300;
-          color: rgba(255, 255, 255, 0.85);
+          color: rgba(255, 255, 255, 0.9);
         }
-        .footer-wx-unit { font-size: 0.7rem; color: rgba(255, 255, 255, 0.4) }
+        .footer-wx-unit { font-size: 0.7rem; color: rgba(255, 255, 255, 0.5) }
         .footer-wx-lbl {
           font-size: 8px; letter-spacing: .14em; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.35); margin-top: 1px;
+          color: rgba(255, 255, 255, 0.4); margin-top: 1px;
         }
 
         .footer-col-title {
           font-size: 8.5px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.35); margin-bottom: 0.6rem;
+          color: rgba(255, 255, 255, 0.4); margin-bottom: 0.6rem;
         }
         .footer-col-links {
           display: flex; flex-direction: column; gap: 5px;
         }
         .footer-col-links a {
-          font-size: 12px; color: rgba(255, 255, 255, 0.5);
+          font-size: 12px; color: rgba(255, 255, 255, 0.6);
           text-decoration: none; transition: all .2s ease;
         }
         .footer-col-links a:hover { 
           color: rgba(255, 255, 255, 1);
-          transform: translateZ(5px); /* Lift links off the plane on hover */
+          transform: translateZ(5px);
         }
         .footer-col-links a.soon {
-          color: rgba(255, 255, 255, 0.18);
+          color: rgba(255, 255, 255, 0.2);
           pointer-events: none;
         }
         .footer-col-links a.soon::after {
           content: ' —';
           font-size: 9px; letter-spacing: .08em;
-          color: rgba(255, 255, 255, 0.12);
+          color: rgba(255, 255, 255, 0.15);
         }
 
         .footer-bottom {
@@ -123,28 +129,28 @@ export default function Footer({ wind, visibility, description }: FooterProps) {
         .footer-credit {
           font-family: var(--font-cormorant), serif;
           font-size: 12px; font-weight: 300; font-style: italic;
-          color: rgba(255, 255, 255, 0.35); line-height: 1.4;
+          color: rgba(255, 255, 255, 0.4); line-height: 1.4;
         }
         .footer-credit a {
-          color: rgba(255, 255, 255, 0.5);
+          color: rgba(255, 255, 255, 0.6);
           text-decoration: none;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
           transition: color .15s ease, border-color .15s ease;
         }
         .footer-credit a:hover {
-          color: rgba(255, 255, 255, 0.9);
-          border-color: rgba(255, 255, 255, 0.5);
+          color: rgba(255, 255, 255, 0.95);
+          border-color: rgba(255, 255, 255, 0.6);
         }
         .footer-love {
           font-family: var(--font-cormorant), serif;
           font-size: 12px; font-weight: 300; font-style: italic;
-          color: rgba(255, 255, 255, 0.3);
+          color: rgba(255, 255, 255, 0.35);
         }
 
         @media(max-width: 600px) {
           .footer {
             padding: 1.25rem 1.1rem 1rem;
-            transform: none; /* Strip perspective on tiny mobile screens for crisp rendering */
+            transform: none;
           }
           .footer-top {
             grid-template-columns: 1fr 1fr;
