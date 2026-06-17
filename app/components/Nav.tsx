@@ -53,9 +53,9 @@ export default function Nav({ active }: NavProps) {
       <nav className="nav-pill">
         <Link href="/" className={`nav-link${active === 'snow' ? ' active' : ''}`}>❄ Snow</Link>
         <div className="nav-divider" />
-        <Link href="/atal-tunnel" className={`nav-link${active === 'atal-tunnel' ? ' active' : ''}`}>Atal Tunnel</Link>
+        <Link href="/is-atal-tunnel-open-today" className={`nav-link${active === 'atal-tunnel' ? ' active' : ''}`}>Atal Tunnel</Link>
         <div className="nav-divider" />
-        <Link href="/rohtang-pass" className={`nav-link${active === 'rohtang-pass' ? ' active' : ''}`}>Rohtang Pass</Link>
+        <Link href="/is-rohtang-pass-open-today" className={`nav-link${active === 'rohtang-pass' ? ' active' : ''}`}>Rohtang Pass</Link>
       </nav>
     </>
   )
