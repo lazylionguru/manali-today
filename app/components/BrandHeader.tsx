@@ -9,11 +9,11 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
     <>
       <style>{`
         .brand-block {
-          display:flex; flex-direction:column; gap:4px;
+          display:flex; flex-direction:column; gap:2px;
         }
         .brand-wordmark {
           font-family:var(--font-cormorant), serif;
-          font-weight:400; font-size:20px; line-height:1;
+          font-weight:400; font-size:34px; line-height:1;
           color:rgba(255,255,255,0.95);
         }
         .brand-wordmark em {
@@ -34,7 +34,7 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
         }
 
         @media(max-width:600px) {
-          .brand-wordmark { font-size:16px }
+          .brand-wordmark { font-size:26px }
           .brand-location { font-size:9px; letter-spacing:.12em }
         }
       `}</style>
