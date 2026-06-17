@@ -76,6 +76,30 @@ export default function RohtangChecker() {
     note: effectiveNote,
   }
 
+  // FAQPage schema — describes the same status already shown in the
+  // hero (status.sub / status.note / LAST_UPDATED / permit notice),
+  // recomputed from effectiveStatus so the Tuesday-maintenance rule
+  // is reflected automatically, same as the visible UI. Status is set
+  // manually by a local resident (see footer credit), not derived
+  // from the weather API — the weather chips are shown to visitors
+  // purely as helpful context.
+  const faqAnswer = `As of the last update on ${LAST_UPDATED}, Rohtang Pass is ${effectiveStatus}. ${status.note}. A permit is required to visit, available through the Himachal Pradesh government portal. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — pass status can change without notice due to weather, snowfall, or scheduled closures, so refer back here for the current update before you travel.`
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Is Rohtang Pass open today?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faqAnswer,
+        },
+      },
+    ],
+  }
+
   useEffect(() => {
     setDateTime(getISTDateTime())
     const t = setInterval(() => setDateTime(getISTDateTime()), 1000)
@@ -130,6 +154,11 @@ export default function RohtangChecker() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <style>{`
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
         html, body { height:100%; overflow:hidden; font-family:var(--font-inter), sans-serif }

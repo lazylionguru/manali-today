@@ -29,6 +29,30 @@ const STATUS_MAP = {
   },
 }
 
+const status = STATUS_MAP[TUNNEL_STATUS]
+
+// FAQPage schema — describes the same status already shown in the hero
+// (status.sub / status.note / LAST_UPDATED), so it can't drift out of
+// sync with what's on screen. Status is set manually by a local
+// resident (see footer credit), not derived from the weather API —
+// the weather chips are shown to visitors purely as helpful context.
+const faqAnswer = `As of the last update on ${LAST_UPDATED}, Atal Tunnel is ${TUNNEL_STATUS === 'open' ? 'open' : TUNNEL_STATUS === 'closed' ? 'closed' : 'open to all-wheel drive vehicles only'}. ${status.note}. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — tunnel status can change without notice due to weather, snowfall, or maintenance, so refer back here for the current update before you travel.`
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is Atal Tunnel open today?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faqAnswer,
+      },
+    },
+  ],
+}
+
 function getISTHour(): number {
   const now = new Date()
   const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
@@ -65,8 +89,6 @@ export default function AtalTunnelChecker() {
   } | null>(null)
   const [showAnswer, setShowAnswer] = useState(false)
   const starsRef = useRef<HTMLDivElement>(null)
-
-  const status = STATUS_MAP[TUNNEL_STATUS]
 
   useEffect(() => {
     setDateTime(getISTDateTime())
@@ -122,6 +144,11 @@ export default function AtalTunnelChecker() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <style>{`
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
         html, body { height:100%; overflow:hidden; font-family:var(--font-inter), sans-serif }

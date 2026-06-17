@@ -49,6 +49,31 @@ function getScene(h: number, wxCode: number): string {
   return 'night'
 }
 
+// FAQPage schema — describes the same answer already shown in the hero.
+// IS_SNOWING and LAST_SNOWED are the same constants driving the visible
+// Yes/No + "Last snowfall" copy, so the schema can never drift out of
+// sync with what's on screen. Status here is set manually by a local
+// resident (see footer credit), not derived from the weather API —
+// the weather chips are shown to visitors purely as helpful context.
+const faqAnswer = IS_SNOWING
+  ? `Yes, it is currently snowing in Manali. This is confirmed directly by a local resident, not an automated weather feed — refer to this page for the latest update, as snowfall can start or stop without notice.`
+  : `No, it is not currently snowing in Manali right now. The last recorded snowfall was on ${LAST_SNOWED}. This status is confirmed directly by a local resident, not an automated weather feed — refer back here for the current update, as conditions can change quickly in the mountains.`
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is it snowing in Manali today?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faqAnswer,
+      },
+    },
+  ],
+}
+
 export default function SnowChecker() {
   const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day-cloudy')
@@ -133,6 +158,11 @@ export default function SnowChecker() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <style>{`
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
         html, body { height:100%; overflow:hidden; font-family:var(--font-inter), sans-serif }
