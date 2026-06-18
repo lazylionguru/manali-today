@@ -34,7 +34,7 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
         }
 
         @media(max-width:600px) {
-          .brand-wordmark { font-size:26px }
+          .brand-wordmark { font-size:30px }
           .brand-location { font-size:9px; letter-spacing:.12em }
         }
       `}</style>
