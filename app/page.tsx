@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Is it Snowing in Manali Today?',
     description: 'Live snow conditions in Manali, updated by a local. Check before you travel.',
     url: 'https://manali.today',
-    images: [{ url: '/og.jpg', width: 1200, height: 630 }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
 }
 
