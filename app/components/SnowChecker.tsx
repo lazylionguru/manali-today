@@ -312,7 +312,7 @@ export default function SnowChecker() {
           .answer-word { font-size:clamp(5.5rem,22vw,7.5rem) }
           .answer-sub { font-size:9px }
           .snow-history { font-size:10px }
-          .wx-bar { padding:0.9rem 1.1rem; bottom:88px }
+          .wx-bar { padding:0.9rem 1.1rem; bottom:58px }
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }
