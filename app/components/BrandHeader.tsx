@@ -13,7 +13,7 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
         }
         .brand-wordmark {
           font-family:var(--font-cormorant), serif;
-          font-weight:400; font-size:34px; line-height:1;
+          font-weight:400; font-size:40px; line-height:1;
           color:rgba(255,255,255,0.95);
         }
         .brand-wordmark em {
