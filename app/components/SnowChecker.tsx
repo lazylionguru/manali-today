@@ -6,7 +6,7 @@ import Nav from './Nav'
 import BrandHeader from './BrandHeader'
 
 const IS_SNOWING = false
-const LAST_SNOWED = '12 June 2026'
+const LAST_SNOWED = '21 March 2026'
 
 interface WeatherData {
   temp: string
