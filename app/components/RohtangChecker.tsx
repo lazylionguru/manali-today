@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Footer from './Footer'
 import Nav from './Nav'
+import BrandHeader from './BrandHeader'
 
 const ROHTANG_STATUS: 'open' | 'closed' = 'open'
 const LAST_UPDATED = '16 June 2026'
@@ -195,19 +196,6 @@ export default function RohtangChecker() {
         .header-row {
           width:100%; display:flex; align-items:center; justify-content:space-between;
         }
-        .location-pill {
-          display:flex; align-items:center; gap:7px;
-          font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase;
-          color:rgba(255,255,255,0.6); white-space:nowrap;
-        }
-        .live-dot {
-          width:6px; height:6px; border-radius:50%; background:#48d9c0; flex-shrink:0;
-          animation:pulse 2.5s ease-in-out infinite;
-        }
-        @keyframes pulse {
-          0%,100%{box-shadow:0 0 0 0 rgba(72,217,192,.5)}
-          50%{box-shadow:0 0 0 5px rgba(72,217,192,0)}
-        }
         .weather-data { display:flex; align-items:center; gap:1.75rem }
         .wx-item { text-align:right }
         .wx-val { font-size:13px; font-weight:500; color:rgba(255,255,255,0.88); letter-spacing:.02em }
@@ -337,7 +325,6 @@ export default function RohtangChecker() {
         @media(max-width:600px) {
           .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
           .header-row .weather-data { display:none }
-          .location-pill { font-size:9px; letter-spacing:.12em }
           .page { padding-top:140px; padding-bottom:40px }
           .tagline { font-size:9px; margin-bottom:1.2rem }
           .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.8rem }
@@ -371,10 +358,7 @@ export default function RohtangChecker() {
       {/* Header */}
       <header className="header">
         <div className="header-row">
-          <div className="location-pill">
-            <span className="live-dot" />
-            Rohtang Pass · 3978m
-          </div>
+          <BrandHeader location="Rohtang Pass · 3978m" />
           <div className="weather-data">
             <div className="wx-item">
               <div className="wx-val">{weather?.temp ?? '—'}</div>
