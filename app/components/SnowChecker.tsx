@@ -304,7 +304,7 @@ export default function SnowChecker() {
         }
 
         @media(max-width:600px) {
-          .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
+          .header { padding:1.1rem 1.1rem 0.8rem; gap:0.85rem }
           .header-row .weather-data { display:none }
           .page { padding-top:105px; padding-bottom:180px }
           .tagline { font-size:9px; margin-bottom:1rem }
@@ -312,7 +312,7 @@ export default function SnowChecker() {
           .answer-word { font-size:clamp(5.5rem,22vw,7.5rem) }
           .answer-sub { font-size:9px }
           .snow-history { font-size:10px }
-          .wx-bar { padding:0.9rem 1.1rem }
+          .wx-bar { padding:0.9rem 1.1rem; bottom:88px }
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }
