@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -54,6 +55,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+      <head>
+        <Script
+          defer
+          data-site="h75ht2do"
+          src="https://piqo.app/piqo.js"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>{children}</body>
     </html>
   )
