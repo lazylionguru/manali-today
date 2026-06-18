@@ -293,14 +293,14 @@ export default function AtalTunnelChecker() {
         }
 
         @media(max-width:600px) {
-          .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
+          .header { padding:1.1rem 1.1rem 0.8rem; gap:0.85rem }
           .header-row .weather-data { display:none }
           .page { padding-top:105px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1.2rem }
           .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.8rem }
           .answer-word { font-size:clamp(3rem,14vw,5rem) }
           .answer-sub { font-size:9px }
-          .wx-bar { padding:0.9rem 1.1rem }
+          .wx-bar { padding:0.9rem 1.1rem; bottom:58px }
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }

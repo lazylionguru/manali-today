@@ -323,7 +323,7 @@ export default function RohtangChecker() {
         }
 
         @media(max-width:600px) {
-          .header { padding:0.9rem 1.1rem 0.8rem; gap:0.75rem }
+          .header { padding:1.1rem 1.1rem 0.8rem; gap:0.85rem }
           .header-row .weather-data { display:none }
           .page { padding-top:140px; padding-bottom:40px }
           .tagline { font-size:9px; margin-bottom:1.2rem }
@@ -332,7 +332,7 @@ export default function RohtangChecker() {
           .answer-sub { font-size:9px }
           .permit-notice { padding:6px 12px }
           .permit-text, .permit-link { font-size:9px }
-          .wx-bar { padding:0.9rem 1.1rem }
+          .wx-bar { padding:0.9rem 1.1rem; bottom:58px }
           .wx-stats { gap:1.1rem }
           .wx-stat-val { font-size:1.2rem }
           .wx-stat-lbl { font-size:8px }
