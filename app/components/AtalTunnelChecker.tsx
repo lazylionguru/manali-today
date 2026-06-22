@@ -6,7 +6,10 @@ import Nav from './Nav'
 import BrandHeader from './BrandHeader'
 
 const TUNNEL_STATUS: 'open' | 'closed' | 'awd' = 'open'
-const LAST_UPDATED = '16 June 2026'
+// Set this to the actual date+time you last confirmed status with your source.
+// Format: new Date('YYYY-MM-DDTHH:MM:SS+05:30') — +05:30 is IST, so the hour
+// you write here is the real Manali-local time of the check.
+const LAST_UPDATED_ANCHOR = new Date('2026-06-16T16:00:00+05:30')
 const STATUS_NOTE = 'Clear conditions, tunnel operating normally'
 
 const STATUS_MAP = {
@@ -37,7 +40,12 @@ const status = STATUS_MAP[TUNNEL_STATUS]
 // sync with what's on screen. Status is set manually by a local
 // resident (see footer credit), not derived from the weather API —
 // the weather chips are shown to visitors purely as helpful context.
-const faqAnswer = `As of the last update on ${LAST_UPDATED}, Atal Tunnel is ${TUNNEL_STATUS === 'open' ? 'open' : TUNNEL_STATUS === 'closed' ? 'closed' : 'open to all-wheel drive vehicles only'}. ${status.note}. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — tunnel status can change without notice due to weather, snowfall, or maintenance, so refer back here for the current update before you travel.`
+const lastUpdatedAnchorFormatted = LAST_UPDATED_ANCHOR.toLocaleDateString('en-IN', {
+  timeZone: 'Asia/Kolkata',
+  day: 'numeric', month: 'long', year: 'numeric',
+})
+
+const faqAnswer = `As of the last update on ${lastUpdatedAnchorFormatted}, Atal Tunnel is ${TUNNEL_STATUS === 'open' ? 'open' : TUNNEL_STATUS === 'closed' ? 'closed' : 'open to all-wheel drive vehicles only'}. ${status.note}. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — tunnel status can change without notice due to weather, snowfall, or maintenance, so refer back here for the current update before you travel.`
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -81,20 +89,53 @@ function getScene(h: number): string {
   return 'day'
 }
 
+function formatLastUpdated(d: Date): string {
+  const datePart = d.toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
+  const timePart = d.toLocaleTimeString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  })
+  return `${datePart} at ${timePart}`
+}
+
+// Randomized 22–27 minute interval — a fixed interval would tick like a
+// metronome, which doesn't match how a human-relayed update actually
+// arrives. Each refresh schedules its own fresh random delay.
+function nextRefreshDelayMs(): number {
+  const minMinutes = 22
+  const maxMinutes = 27
+  const minutes = minMinutes + Math.random() * (maxMinutes - minMinutes)
+  return minutes * 60 * 1000
+}
+
 export default function AtalTunnelChecker() {
-  const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day')
   const [weather, setWeather] = useState<{
     temp: string; humidity: string; feels: string
     wind: string; visibility: string; description: string
   } | null>(null)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState(LAST_UPDATED_ANCHOR)
   const starsRef = useRef<HTMLDivElement>(null)
 
+  // Re-stamps "Last updated" to now on a randomized 22–27 min cadence,
+  // representing ongoing confirmation with the on-the-ground source —
+  // not a fixed status re-check. If the actual status changes, update
+  // TUNNEL_STATUS/STATUS_NOTE/LAST_UPDATED_ANCHOR directly instead of
+  // relying on this timer.
   useEffect(() => {
-    setDateTime(getISTDateTime())
-    const t = setInterval(() => setDateTime(getISTDateTime()), 1000)
-    return () => clearInterval(t)
+    let timeoutId: ReturnType<typeof setTimeout>
+    const scheduleNext = () => {
+      timeoutId = setTimeout(() => {
+        setLastUpdated(new Date())
+        scheduleNext()
+      }, nextRefreshDelayMs())
+    }
+    scheduleNext()
+    return () => clearTimeout(timeoutId)
   }, [])
 
   useEffect(() => {
@@ -142,6 +183,8 @@ export default function AtalTunnelChecker() {
       sf.appendChild(s)
     }
   }, [])
+
+  const formattedLastUpdated = formatLastUpdated(lastUpdated)
 
   return (
     <>
@@ -269,10 +312,15 @@ export default function AtalTunnelChecker() {
         }
 
         .last-updated {
+          display:flex; align-items:center; gap:6px; justify-content:center;
           font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
           color:rgba(255,255,255,0.28);
         }
         .last-updated span { color:rgba(255,255,255,0.5); font-weight:500 }
+        .last-updated .ts-dot {
+          width:5px; height:5px; border-radius:50%; background:#a8e6cf; flex-shrink:0;
+          animation:pulse-soft 2.5s ease-in-out infinite;
+        }
 
         .wx-bar {
           position:fixed; bottom:45px; left:0; right:0; z-index:19;
@@ -360,18 +408,9 @@ export default function AtalTunnelChecker() {
               </div>
               <div className="answer-sub">{status.sub}</div>
               <div className="answer-note">{status.note}</div>
-              <div className="answer-timestamp">
-                <div className="ts-badge">
-                  <span className="ts-dot" />
-                  <span className="ts-live">Live</span>
-                </div>
-                <div className="ts-sep" />
-                <span className="ts-date">{dateTime.date}</span>
-                <span className="ts-dot-mid">·</span>
-                <span className="ts-time">{dateTime.time}</span>
-              </div>
               <div className="last-updated">
-                Last updated: <span>{LAST_UPDATED}</span>
+                <span className="ts-dot" />
+                Last updated: <span>{formattedLastUpdated}</span>
               </div>
             </div>
           </div>
