@@ -22,11 +22,7 @@ export default function Nav({ active }: NavProps) {
             inset 0 1px 0px rgba(255, 255, 255, 0.15),
             0 -10px 30px rgba(0, 0, 0, 0.35);
         }
-        .nav-pill::before {
-          content:''; position:absolute;
-          top:0; left:5%; right:5%; height:1px;
-          background:linear-gradient(to right, transparent, rgba(255,255,255,0.7) 25%, rgba(255,255,255,0.7) 75%, transparent);
-        }
+        
         .nav-link {
           font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
           color:rgba(255,255,255,0.45); text-decoration:none;
