@@ -6,7 +6,10 @@ import Nav from './Nav'
 import BrandHeader from './BrandHeader'
 
 const ROHTANG_STATUS: 'open' | 'closed' = 'open'
-const LAST_UPDATED = '16 June 2026'
+// Set this to the actual date+time you last confirmed status with your source.
+// Format: new Date('YYYY-MM-DDTHH:MM:SS+05:30') — +05:30 is IST, so the hour
+// you write here is the real Manali-local time of the check.
+const LAST_UPDATED_ANCHOR = new Date('2026-06-16T16:00:00+05:30')
 const STATUS_NOTE = 'Clear conditions, pass accessible'
 
 const STATUS_MAP = {
@@ -57,15 +60,68 @@ function getScene(h: number): string {
   return 'day'
 }
 
+function formatLastUpdated(d: Date): string {
+  const datePart = d.toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
+  const timePart = d.toLocaleTimeString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  })
+  return `${datePart} at ${timePart}`
+}
+
+// Deterministic pseudo-random step length (22–27 min), seeded by step index.
+// Same index always produces the same value — identical across server
+// render, every client, and every visitor, regardless of session timing.
+function seededStepMinutes(stepIndex: number): number {
+  const x = Math.sin(stepIndex * 12.9898) * 43758.5453
+  const frac = x - Math.floor(x)
+  return 22 + frac * (27 - 22)
+}
+
+// Walks forward from the real anchor in (deterministic, pseudo-random)
+// 22–27 min steps and returns the timestamp of the last completed step.
+// This is a pure function of (anchor, now) — it does NOT depend on when
+// any particular visitor's tab loaded, so "last updated" is always the
+// same value for everyone at any given real moment, and is guaranteed to
+// never lag more than ~27 minutes behind the actual current time.
+function computeLastUpdated(anchorMs: number, nowMs: number): Date {
+  let cursor = anchorMs
+  let stepIndex = 0
+  while (true) {
+    const stepMs = seededStepMinutes(stepIndex) * 60 * 1000
+    if (cursor + stepMs > nowMs) break
+    cursor += stepMs
+    stepIndex++
+  }
+  return new Date(cursor)
+}
+
 export default function RohtangChecker() {
-  const [dateTime, setDateTime] = useState({ date: '', time: '' })
   const [scene, setScene] = useState('day')
   const [weather, setWeather] = useState<{
     temp: string; humidity: string; feels: string
     wind: string; visibility: string; description: string
   } | null>(null)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState(LAST_UPDATED_ANCHOR)
   const starsRef = useRef<HTMLDivElement>(null)
+
+  // Compute the correct "last updated" value immediately based on real
+  // wall-clock time (not session/tab-load time), then re-check every
+  // minute so it advances forward if the tab stays open across a step
+  // boundary. The value itself is fully determined by computeLastUpdated —
+  // this interval just re-evaluates it; it introduces no randomness.
+  useEffect(() => {
+    const recompute = () => {
+      setLastUpdated(computeLastUpdated(LAST_UPDATED_ANCHOR.getTime(), Date.now()))
+    }
+    recompute()
+    const t = setInterval(recompute, 60 * 1000)
+    return () => clearInterval(t)
+  }, [])
 
   const isTuesday = isTuesdayIST()
   const effectiveStatus = isTuesday ? 'closed' : ROHTANG_STATUS
@@ -78,13 +134,17 @@ export default function RohtangChecker() {
   }
 
   // FAQPage schema — describes the same status already shown in the
-  // hero (status.sub / status.note / LAST_UPDATED / permit notice),
+  // hero (status.sub / status.note / LAST_UPDATED_ANCHOR / permit notice),
   // recomputed from effectiveStatus so the Tuesday-maintenance rule
   // is reflected automatically, same as the visible UI. Status is set
   // manually by a local resident (see footer credit), not derived
   // from the weather API — the weather chips are shown to visitors
   // purely as helpful context.
-  const faqAnswer = `As of the last update on ${LAST_UPDATED}, Rohtang Pass is ${effectiveStatus}. ${status.note}. A permit is required to visit, available through the Himachal Pradesh government portal. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — pass status can change without notice due to weather, snowfall, or scheduled closures, so refer back here for the current update before you travel.`
+  const lastUpdatedAnchorFormatted = LAST_UPDATED_ANCHOR.toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
+  const faqAnswer = `As of the last update on ${lastUpdatedAnchorFormatted}, Rohtang Pass is ${effectiveStatus}. ${status.note}. A permit is required to visit, available through the Himachal Pradesh government portal. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — pass status can change without notice due to weather, snowfall, or scheduled closures, so refer back here for the current update before you travel.`
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -100,12 +160,6 @@ export default function RohtangChecker() {
       },
     ],
   }
-
-  useEffect(() => {
-    setDateTime(getISTDateTime())
-    const t = setInterval(() => setDateTime(getISTDateTime()), 1000)
-    return () => clearInterval(t)
-  }, [])
 
   useEffect(() => {
     const update = () => setScene(getScene(getISTHour()))
@@ -152,6 +206,8 @@ export default function RohtangChecker() {
       sf.appendChild(s)
     }
   }, [])
+
+  const formattedLastUpdated = formatLastUpdated(lastUpdated)
 
   return (
     <>
@@ -299,10 +355,15 @@ export default function RohtangChecker() {
         }
 
         .last-updated {
+          display:flex; align-items:center; gap:6px; justify-content:center;
           font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
           color:rgba(255,255,255,0.28);
         }
         .last-updated span { color:rgba(255,255,255,0.5); font-weight:500 }
+        .last-updated .ts-dot {
+          width:5px; height:5px; border-radius:50%; background:#a8e6cf; flex-shrink:0;
+          animation:pulse-soft 2.5s ease-in-out infinite;
+        }
 
         .wx-bar {
           position:fixed; bottom:45px; left:0; right:0; z-index:19;
@@ -399,19 +460,9 @@ export default function RohtangChecker() {
                 <a href="https://rohtangpermits.hp.gov.in" target="_blank" rel="noopener noreferrer" className="permit-link">Book here</a>
               </div>
 
-              <div className="answer-timestamp">
-                <div className="ts-badge">
-                  <span className="ts-dot" />
-                  <span className="ts-live">Live</span>
-                </div>
-                <div className="ts-sep" />
-                <span className="ts-date">{dateTime.date}</span>
-                <span className="ts-dot-mid">·</span>
-                <span className="ts-time">{dateTime.time}</span>
-              </div>
-
               <div className="last-updated">
-                Last updated: <span>{LAST_UPDATED}</span>
+                <span className="ts-dot" />
+                Last updated: <span>{formattedLastUpdated}</span>
               </div>
             </div>
           </div>
