@@ -24,21 +24,7 @@ export default function Footer() {
             0 -30px 70px rgba(0, 0, 0, 0.5);
         }
 
-        .footer::before {
-          content: "";
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 1px;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0.02) 0%,
-            rgba(255,255,255,0.4) 20%,
-            rgba(255,255,255,0.6) 50%,
-            rgba(255,255,255,0.4) 80%,
-            rgba(255,255,255,0.02) 100%
-          );
-          pointer-events: none;
-        }
+        
 
         .footer-row {
           display: flex;
