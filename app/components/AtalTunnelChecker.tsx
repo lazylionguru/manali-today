@@ -250,8 +250,8 @@ export default function AtalTunnelChecker() {
 
         .page {
           position:fixed; inset:0; z-index:10;
-          display:flex; flex-direction:column; align-items:center; justify-content:center;
-          padding:0 1.5rem; padding-top:180px; padding-bottom:40px;
+          display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+          padding:0 1.5rem; padding-top:230px; padding-bottom:40px;
         }
         .content { text-align:center; max-width:640px; width:100% }
 
@@ -282,7 +282,7 @@ export default function AtalTunnelChecker() {
 
         .answer-word {
           font-family:var(--font-cormorant), serif;
-          font-size:clamp(4rem,14vw,7rem);
+          font-size:clamp(5rem,18vw,9rem);
           font-weight:300; line-height:1; letter-spacing:-.03em;
           text-shadow:0 8px 60px rgba(0,0,0,0.28);
         }
@@ -360,7 +360,7 @@ export default function AtalTunnelChecker() {
           .page { padding-top:105px; padding-bottom:80px }
           .tagline { font-size:9px; margin-bottom:1.2rem }
           .headline { font-size:clamp(2.2rem,10vw,3.5rem); margin-bottom:1.8rem }
-          .answer-word { font-size:clamp(3rem,14vw,5rem) }
+          .answer-word { font-size:clamp(4rem,16vw,6rem) }
           .answer-sub { font-size:9px }
           .wx-bar { padding:0.9rem 1.1rem; bottom:58px }
           .wx-stats { gap:1.1rem }

@@ -259,8 +259,8 @@ export default function RohtangChecker() {
 
         .page {
           position:fixed; inset:0; z-index:10;
-          display:flex; flex-direction:column; align-items:center; justify-content:center;
-          padding:0 1.5rem; padding-top:180px; padding-bottom:40px;
+          display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+          padding:0 1.5rem; padding-top:230px; padding-bottom:40px;
         }
         .content { text-align:center; max-width:640px; width:100% }
 
