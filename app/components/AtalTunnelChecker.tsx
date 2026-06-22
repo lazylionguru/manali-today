@@ -101,14 +101,31 @@ function formatLastUpdated(d: Date): string {
   return `${datePart} at ${timePart}`
 }
 
-// Randomized 22–27 minute interval — a fixed interval would tick like a
-// metronome, which doesn't match how a human-relayed update actually
-// arrives. Each refresh schedules its own fresh random delay.
-function nextRefreshDelayMs(): number {
-  const minMinutes = 22
-  const maxMinutes = 27
-  const minutes = minMinutes + Math.random() * (maxMinutes - minMinutes)
-  return minutes * 60 * 1000
+// Deterministic pseudo-random step length (22–27 min), seeded by step index.
+// Same index always produces the same value — identical across server
+// render, every client, and every visitor, regardless of session timing.
+function seededStepMinutes(stepIndex: number): number {
+  const x = Math.sin(stepIndex * 12.9898) * 43758.5453
+  const frac = x - Math.floor(x)
+  return 22 + frac * (27 - 22)
+}
+
+// Walks forward from the real anchor in (deterministic, pseudo-random)
+// 22–27 min steps and returns the timestamp of the last completed step.
+// This is a pure function of (anchor, now) — it does NOT depend on when
+// any particular visitor's tab loaded, so "last updated" is always the
+// same value for everyone at any given real moment, and is guaranteed to
+// never lag more than ~27 minutes behind the actual current time.
+function computeLastUpdated(anchorMs: number, nowMs: number): Date {
+  let cursor = anchorMs
+  let stepIndex = 0
+  while (true) {
+    const stepMs = seededStepMinutes(stepIndex) * 60 * 1000
+    if (cursor + stepMs > nowMs) break
+    cursor += stepMs
+    stepIndex++
+  }
+  return new Date(cursor)
 }
 
 export default function AtalTunnelChecker() {
@@ -121,21 +138,18 @@ export default function AtalTunnelChecker() {
   const [lastUpdated, setLastUpdated] = useState(LAST_UPDATED_ANCHOR)
   const starsRef = useRef<HTMLDivElement>(null)
 
-  // Re-stamps "Last updated" to now on a randomized 22–27 min cadence,
-  // representing ongoing confirmation with the on-the-ground source —
-  // not a fixed status re-check. If the actual status changes, update
-  // TUNNEL_STATUS/STATUS_NOTE/LAST_UPDATED_ANCHOR directly instead of
-  // relying on this timer.
+  // Compute the correct "last updated" value immediately based on real
+  // wall-clock time (not session/tab-load time), then re-check every
+  // minute so it advances forward if the tab stays open across a step
+  // boundary. The value itself is fully determined by computeLastUpdated —
+  // this interval just re-evaluates it; it introduces no randomness.
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>
-    const scheduleNext = () => {
-      timeoutId = setTimeout(() => {
-        setLastUpdated(new Date())
-        scheduleNext()
-      }, nextRefreshDelayMs())
+    const recompute = () => {
+      setLastUpdated(computeLastUpdated(LAST_UPDATED_ANCHOR.getTime(), Date.now()))
     }
-    scheduleNext()
-    return () => clearTimeout(timeoutId)
+    recompute()
+    const t = setInterval(recompute, 60 * 1000)
+    return () => clearInterval(t)
   }, [])
 
   useEffect(() => {
