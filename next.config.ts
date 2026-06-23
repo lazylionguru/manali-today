@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
       destination: 'https://manali.today/:path*',
       permanent: true,
     }]
-  }
+  },
+  outputFileTracingIncludes: {
+    '/guide/[slug]': ['./content/guides/**/*'],
+  },
 }
 
 export default nextConfig

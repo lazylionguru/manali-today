@@ -6,19 +6,20 @@ import { mdxComponents } from '../../components/mdx-components'
 import { getGuideBySlug, getAllGuideSlugs } from '../../../lib/mdx'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export function generateStaticParams() {
   return getAllGuideSlugs().map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const guide = getGuideBySlug(params.slug)
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const guide = getGuideBySlug(slug)
   if (!guide) return {}
 
   const { title, description, ogImage } = guide.frontmatter
-  const url = `https://manali.today/guide/${params.slug}`
+  const url = `https://manali.today/guide/${slug}`
 
   return {
     title: `${title} | manali.today`,
@@ -34,8 +35,9 @@ export function generateMetadata({ params }: PageProps): Metadata {
   }
 }
 
-export default function GuidePage({ params }: PageProps) {
-  const guide = getGuideBySlug(params.slug)
+export default async function GuidePage({ params }: PageProps) {
+  const { slug } = await params
+  const guide = getGuideBySlug(slug)
   if (!guide) notFound()
 
   const { frontmatter, content } = guide

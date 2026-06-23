@@ -28,7 +28,7 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
     <>
       <style>{`
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
-        html, body { font-family:var(--font-inter), sans-serif }
+        html, body { font-family:var(--font-inter), sans-serif; height:auto; overflow:auto; overflow-y:visible }
 
         .cs-root {
           min-height:100vh;
