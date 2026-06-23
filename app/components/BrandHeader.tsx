@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 interface BrandHeaderProps {
   location: string
 }
@@ -15,7 +17,10 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
           font-family:var(--font-cormorant), serif;
           font-weight:400; font-size:40px; line-height:1;
           color:rgba(255,255,255,0.95);
+          text-decoration:none; display:inline-block;
+          transition:opacity .2s ease;
         }
+        .brand-wordmark:hover { opacity:0.85 }
         .brand-wordmark em {
           font-style:italic; color:#c6e3ff;
         }
@@ -40,7 +45,7 @@ export default function BrandHeader({ location }: BrandHeaderProps) {
       `}</style>
 
       <div className="brand-block">
-        <div className="brand-wordmark">manali<em>.today</em></div>
+        <Link href="/" className="brand-wordmark">manali<em>.today</em></Link>
         <div className="brand-location">
           <span className="brand-live-dot" />
           {location}

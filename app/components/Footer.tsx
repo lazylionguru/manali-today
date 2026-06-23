@@ -97,7 +97,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-explore">
-            <a href="/guide" className="soon">Local Guide</a>
+            <a href="/guide">Local Guide</a>
             <a href="/places" className="soon">Places we love</a>
             <a href="/blog" className="soon">Blog</a>
           </div>
