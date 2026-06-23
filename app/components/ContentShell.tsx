@@ -93,6 +93,50 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
           color:rgba(255,255,255,0.3); white-space:nowrap;
         }
 
+        .mdx-h2 {
+          font-family:var(--font-cormorant), serif; font-weight:400;
+          font-size:clamp(1.6rem,3.5vw,2.1rem); line-height:1.25;
+          color:rgba(255,255,255,0.95); margin:2.75rem 0 1rem;
+        }
+        .mdx-h3 {
+          font-family:var(--font-cormorant), serif; font-weight:400;
+          font-size:1.3rem; line-height:1.3;
+          color:rgba(255,255,255,0.9); margin:2rem 0 0.75rem;
+        }
+        .mdx-p {
+          font-size:15.5px; line-height:1.75; color:rgba(255,255,255,0.62);
+          margin:0 0 1.25rem;
+        }
+        .mdx-strong { color:rgba(255,255,255,0.88); font-weight:600 }
+        .mdx-ul, .mdx-ol { margin:0 0 1.25rem; padding-left:1.4rem }
+        .mdx-li { font-size:15.5px; line-height:1.7; color:rgba(255,255,255,0.62); margin-bottom:0.5rem }
+        .mdx-link {
+          color:#c6e3ff; text-decoration:none;
+          border-bottom:1px solid rgba(198,227,255,0.3);
+          transition:border-color .2s ease;
+        }
+        .mdx-link:hover { border-color:rgba(198,227,255,0.8) }
+        .mdx-link-external { color:rgba(198,227,255,0.85) }
+        .mdx-blockquote {
+          border-left:2px solid rgba(198,227,255,0.4);
+          padding-left:1.25rem; margin:1.5rem 0;
+          font-style:italic; color:rgba(255,255,255,0.55);
+        }
+
+        .mdx-table-wrap { overflow-x:auto; margin:1.5rem 0 2rem }
+        .mdx-table { width:100%; border-collapse:collapse; font-size:14px }
+        .mdx-thead { border-bottom:1px solid rgba(255,255,255,0.18) }
+        .mdx-th {
+          text-align:left; padding:0.65rem 1rem;
+          font-weight:600; letter-spacing:.04em; text-transform:uppercase; font-size:11px;
+          color:rgba(198,227,255,0.85); white-space:nowrap;
+        }
+        .mdx-td {
+          padding:0.65rem 1rem; color:rgba(255,255,255,0.6);
+          border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .mdx-tr:last-child .mdx-td { border-bottom:none }
+
         @media(max-width:600px) {
           .cs-header { padding:1.1rem 1.1rem 0.8rem }
           .cs-main { padding-top:95px }
@@ -102,6 +146,10 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
           .cs-footer-explore a { font-size:9.5px }
           .cs-footer-credit { font-size:10.5px }
           .cs-footer-love { display:none }
+          .mdx-h2 { font-size:1.5rem; margin:2rem 0 0.85rem }
+          .mdx-p, .mdx-li { font-size:15px }
+          .mdx-table { font-size:13px }
+          .mdx-th, .mdx-td { padding:0.5rem 0.6rem }
         }
       `}</style>
 

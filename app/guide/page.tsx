@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import ContentShell from '../components/ContentShell'
+import { getAllGuides } from '../../lib/mdx'
 
 export const metadata: Metadata = {
   title: 'Manali Travel Guide, Written by a Local Resident | manali.today',
@@ -16,30 +17,23 @@ export const metadata: Metadata = {
   },
 }
 
-interface GuideTile {
+interface PlannedGuide {
   slug: string
   title: string
   description: string
   tag: string
-  live: boolean
 }
 
-const guides: GuideTile[] = [
-  {
-    slug: 'manali',
-    title: 'Complete Manali Travel Guide',
-    description:
-      'Everything to plan a trip: when to go, where to stay, what to do, and how the town actually works, from someone who lives here year-round.',
-    tag: 'Pillar Guide',
-    live: true,
-  },
+// Guides not yet written. Once a matching .mdx file is added to
+// content/guides/, remove its entry here, it'll appear automatically
+// as a live tile pulled from getAllGuides().
+const plannedGuides: PlannedGuide[] = [
   {
     slug: 'best-time-to-visit-manali',
     title: 'Best Time to Visit Manali',
     description:
       'A month-by-month breakdown of weather, crowds, snow, and what each season is actually good for.',
     tag: 'Planning',
-    live: false,
   },
   {
     slug: 'manali-to-rohtang-permit',
@@ -47,7 +41,6 @@ const guides: GuideTile[] = [
     description:
       'How to actually get a Rohtang permit: online process, fees, documents, and the rules nobody explains clearly.',
     tag: 'Permits',
-    live: false,
   },
   {
     slug: 'solang-valley',
@@ -55,7 +48,6 @@ const guides: GuideTile[] = [
     description:
       'Paragliding, snow activities, ropeway, and the best time of day to go before the tour buses arrive.',
     tag: 'Day Trip',
-    live: false,
   },
   {
     slug: 'old-manali',
@@ -63,7 +55,6 @@ const guides: GuideTile[] = [
     description:
       'Cafes, the river walk, where to stay, and how Old Manali differs from the Mall Road side of town.',
     tag: 'Neighbourhood',
-    live: false,
   },
   {
     slug: 'manali-weather',
@@ -71,11 +62,14 @@ const guides: GuideTile[] = [
     description:
       'How weather actually behaves here by season, why forecasts are often wrong in the mountains, and what to pack.',
     tag: 'Weather',
-    live: false,
   },
 ]
 
 export default function GuideIndexPage() {
+  const liveGuides = getAllGuides()
+  const liveSlugs = new Set(liveGuides.map((g) => g.frontmatter.slug))
+  const stillPlanned = plannedGuides.filter((g) => !liveSlugs.has(g.slug))
+
   return (
     <ContentShell>
       <style>{`
@@ -162,23 +156,22 @@ export default function GuideIndexPage() {
         </p>
 
         <div className="gi-grid">
-          {guides.map((g) =>
-            g.live ? (
-              <Link key={g.slug} href={`/guide/${g.slug}`} className="gi-card live">
-                <span className="gi-tag">{g.tag}</span>
-                <span className="gi-card-arrow">→</span>
-                <h2 className="gi-card-title">{g.title}</h2>
-                <p className="gi-card-desc">{g.description}</p>
-              </Link>
-            ) : (
-              <div key={g.slug} className="gi-card soon">
-                <span className="gi-tag">{g.tag}</span>
-                <span className="gi-card-soon-label">Soon</span>
-                <h2 className="gi-card-title">{g.title}</h2>
-                <p className="gi-card-desc">{g.description}</p>
-              </div>
-            )
-          )}
+          {liveGuides.map((g) => (
+            <Link key={g.frontmatter.slug} href={`/guide/${g.frontmatter.slug}`} className="gi-card live">
+              <span className="gi-tag">{g.frontmatter.tag}</span>
+              <span className="gi-card-arrow">→</span>
+              <h2 className="gi-card-title">{g.frontmatter.title}</h2>
+              <p className="gi-card-desc">{g.frontmatter.description}</p>
+            </Link>
+          ))}
+          {stillPlanned.map((g) => (
+            <div key={g.slug} className="gi-card soon">
+              <span className="gi-tag">{g.tag}</span>
+              <span className="gi-card-soon-label">Soon</span>
+              <h2 className="gi-card-title">{g.title}</h2>
+              <p className="gi-card-desc">{g.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </ContentShell>
