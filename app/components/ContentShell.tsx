@@ -32,6 +32,8 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
 
         .cs-root {
           min-height:100vh;
+          display:flex;
+          flex-direction:column;
           background:#0b0d10;
           background-image:
             radial-gradient(ellipse 80% 50% at 50% -10%, rgba(40,55,75,0.55) 0%, transparent 60%),
@@ -47,11 +49,13 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
         }
 
         .cs-main {
+          flex:1 0 auto;
           padding-top:115px;
           padding-bottom:1.5rem;
         }
 
         .cs-footer {
+          flex-shrink:0;
           width:100%;
           padding:1rem 2.5rem;
           box-sizing:border-box;
