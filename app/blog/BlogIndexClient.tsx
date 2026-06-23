@@ -55,7 +55,6 @@ export default function BlogIndexClient({ posts }: { posts: BlogPost[] }) {
             />
             <div className="bi-card-body">
               <h3 className="bi-card-title">{post.frontmatter.title}</h3>
-              <p className="bi-card-desc">{post.frontmatter.description}</p>
               <div className="bi-meta">
                 <span>{formatDate(post.frontmatter.publishedAt)}</span>
                 <span className="bi-dot">·</span>
@@ -108,14 +107,9 @@ const blogIndexStyles = `
   .bi-card-body { padding:1.25rem 1.3rem 1.4rem }
   .bi-card-title {
     font-family:var(--font-cormorant), serif; font-weight:400;
-    font-size:1.15rem; line-height:1.25; color:rgba(255,255,255,0.93);
-    margin-bottom:0.5rem;
+    font-size:1.2rem; line-height:1.3; color:rgba(255,255,255,0.93);
+    margin-bottom:0.9rem;
   }
-  .bi-card-desc {
-    font-size:12.5px; line-height:1.5; color:rgba(255,255,255,0.45);
-    margin-bottom:0.8rem;
-  }
-
   .bi-meta {
     font-size:11px; color:rgba(255,255,255,0.35);
     display:flex; align-items:center; gap:6px;
