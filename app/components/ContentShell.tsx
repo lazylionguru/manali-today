@@ -48,7 +48,7 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
 
         .cs-main {
           padding-top:115px;
-          padding-bottom:4rem;
+          padding-bottom:1.5rem;
         }
 
         .cs-footer {
