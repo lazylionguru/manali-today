@@ -66,8 +66,8 @@ export default async function BlogPostPage({ params }: PageProps) {
       <style>{`
         .bp-wrap { max-width:720px; margin:0 auto; padding:0 1.75rem 3rem }
         .bp-cover {
-          width:100%; aspect-ratio:16/9; border-radius:16px;
-          background-size:cover; background-position:center;
+          display:block; width:100%; aspect-ratio:16/9; border-radius:16px;
+          object-fit:cover; object-position:center;
           margin-bottom:2rem;
         }
         .bp-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem }
@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       <div className="bp-wrap">
         {frontmatter.coverImage && (
-          <div className="bp-cover" style={{ backgroundImage: `url('${frontmatter.coverImage}')` }} />
+          <img className="bp-cover" src={frontmatter.coverImage} alt={frontmatter.title} />
         )}
         <div className="bp-tags">
           {frontmatter.tags?.map((tag) => (

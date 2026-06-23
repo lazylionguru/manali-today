@@ -49,9 +49,11 @@ export default function BlogIndexClient({ posts }: { posts: BlogPost[] }) {
       <div className="bi-grid">
         {visiblePosts.map((post) => (
           <Link key={post.frontmatter.slug} href={`/blog/${post.frontmatter.slug}`} className="bi-card">
-            <div
+            <img
               className="bi-card-img"
-              style={{ backgroundImage: `url('${post.frontmatter.thumbImage}')` }}
+              src={post.frontmatter.thumbImage}
+              alt={post.frontmatter.title}
+              loading="lazy"
             />
             <div className="bi-card-body">
               <h3 className="bi-card-title">{post.frontmatter.title}</h3>
@@ -103,7 +105,7 @@ const blogIndexStyles = `
     transition:border-color .25s ease, transform .25s ease;
   }
   .bi-card:hover { border-color:rgba(198,227,255,0.3); transform:translateY(-2px) }
-  .bi-card-img { background-size:cover; background-position:center; height:160px }
+  .bi-card-img { display:block; width:100%; height:160px; object-fit:cover; object-position:center }
   .bi-card-body { padding:1.25rem 1.3rem 1.4rem }
   .bi-card-title {
     font-family:var(--font-cormorant), serif; font-weight:400;
