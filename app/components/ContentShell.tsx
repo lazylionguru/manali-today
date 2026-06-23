@@ -41,13 +41,13 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
 
         .cs-header {
           position:fixed; top:0; left:0; right:0; z-index:20;
-          padding:1.25rem 2rem;
-          display:flex; align-items:center; justify-content:center;
+          padding:1.25rem 2rem 1.1rem;
+          display:flex; align-items:center; justify-content:flex-start;
           background:linear-gradient(to bottom, rgba(8,9,11,0.85) 0%, rgba(8,9,11,0) 100%);
         }
 
         .cs-main {
-          padding-top:95px;
+          padding-top:115px;
           padding-bottom:4rem;
         }
 
@@ -90,8 +90,8 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
         }
 
         @media(max-width:600px) {
-          .cs-header { padding:1.1rem 1.1rem }
-          .cs-main { padding-top:80px }
+          .cs-header { padding:1.1rem 1.1rem 0.8rem }
+          .cs-main { padding-top:95px }
           .cs-footer { padding:0.85rem 1.1rem }
           .cs-footer-row { flex-direction:column; gap:0.6rem }
           .cs-footer-explore { gap:1.25rem; order:-1 }

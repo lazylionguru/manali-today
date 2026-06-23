@@ -3,12 +3,12 @@ import Link from 'next/link'
 import ContentShell from '../components/ContentShell'
 
 export const metadata: Metadata = {
-  title: 'Manali Travel Guide — Written by a Local Resident | manali.today',
+  title: 'Manali Travel Guide, Written by a Local Resident | manali.today',
   description:
-    'In-depth Manali travel guides written by someone who actually lives here — best time to visit, Rohtang permits, Solang Valley, Old Manali, weather by month, and more.',
+    'In-depth Manali travel guides written by someone who actually lives here: best time to visit, Rohtang permits, Solang Valley, Old Manali, weather by month, and more.',
   alternates: { canonical: 'https://manali.today/guide' },
   openGraph: {
-    title: 'Manali Travel Guide — Written by a Local Resident',
+    title: 'Manali Travel Guide, Written by a Local Resident',
     description:
       'In-depth Manali travel guides written by someone who actually lives here.',
     url: 'https://manali.today/guide',
@@ -29,7 +29,7 @@ const guides: GuideTile[] = [
     slug: 'manali',
     title: 'Complete Manali Travel Guide',
     description:
-      'Everything to plan a trip — when to go, where to stay, what to do, and how the town actually works, from someone who lives here year-round.',
+      'Everything to plan a trip: when to go, where to stay, what to do, and how the town actually works, from someone who lives here year-round.',
     tag: 'Pillar Guide',
     live: true,
   },
@@ -45,7 +45,7 @@ const guides: GuideTile[] = [
     slug: 'manali-to-rohtang-permit',
     title: 'Rohtang Pass Permit Guide',
     description:
-      'How to actually get a Rohtang permit — online process, fees, documents, and the rules nobody explains clearly.',
+      'How to actually get a Rohtang permit: online process, fees, documents, and the rules nobody explains clearly.',
     tag: 'Permits',
     live: false,
   },
@@ -157,7 +157,7 @@ export default function GuideIndexPage() {
         </h1>
         <p className="gi-sub">
           No stock travel-blog filler. These guides come from someone who has
-          actually spent years in Old Manali — what's true, what's overrated,
+          actually spent years in Old Manali: what's true, what's overrated,
           and what tourists never get told.
         </p>
 
