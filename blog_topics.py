@@ -29,10 +29,10 @@ TOPICS = [
 
     {
         "slug": "shanag-village-manali-guide",
-        "title": "Shanag Village, Manali: Why I Send Families Here Instead of Mall Road",
+        "title": "Shanag Village, Manali: Why I'd Stay Here Over Mall Road",
         "keyword": "shanag village manali",
         "type": "village",
-        "tags": ["shanag", "wherToStay", "offbeat", "familytravel"],
+        "tags": ["shanag", "whereToStay", "offbeat", "familytravel"],
         "seed_facts": [
             "Shanag sits on the slopes above the valley, quiet, but still close enough to drive into town for a meal or shopping without living in the congestion",
             "I recommend it specifically to families over Mall Road, Nasogi, or Siyal because those areas put you in the thick of peak season traffic the entire trip",
@@ -80,7 +80,7 @@ TOPICS = [
     },
     {
         "slug": "old-manali-guide-cafes-hikes",
-        "title": "Old Manali: Where I Actually Live, and Where I'd Send You for a Day",
+        "title": "Old Manali: Where I Actually Live, and How I'd Spend a Day There",
         "keyword": "old manali guide",
         "type": "village",
         "tags": ["oldmanali", "cafes", "hikes", "wheretostay"],

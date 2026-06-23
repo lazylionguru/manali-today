@@ -18,6 +18,7 @@ import re
 import random
 import time
 import math
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from openai import OpenAI
@@ -32,9 +33,12 @@ DEEPSEEK_API_KEY = os.environ["DEEPSEEK_KEY"]
 POSTS_PER_RUN    = int(os.environ.get("POSTS_PER_RUN", "6"))
 CANDIDATE_COUNT  = int(os.environ.get("CANDIDATE_COUNT", "12"))
 AUTO_MODE        = os.environ.get("AUTO_MODE", "false").lower() == "true"
+SKIP_COVERS      = os.environ.get("SKIP_COVERS", "false").lower() == "true"
 
 CONTENT_DIR = Path(__file__).parent / "content" / "blog"
 CONTENT_DIR.mkdir(parents=True, exist_ok=True)
+COVER_SCRIPT = Path(__file__).parent / "generate-cover.js"
+PUBLIC_BLOG_IMAGES_DIR = Path(__file__).parent / "public" / "blog-images"
 
 client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
 
@@ -293,8 +297,11 @@ def save_as_mdx(topic, content):
                 and not line.startswith("-") and len(line) > 40):
             description = re.sub(r'\*\*(.+?)\*\*', r'\1', line)
             description = re.sub(r'\[(.+?)\]\(.+?\)', r'\1', description)
-            description = description[:160].strip()
             description = description.replace('"', '').replace("'", '').replace(':', ' ').replace('\\', '')
+            description = description.strip()
+            if len(description) > 160:
+                truncated = description[:160].rsplit(' ', 1)[0]
+                description = truncated.rstrip('.,;') + '...'
             break
 
     tags_yaml = "[" + ", ".join(f'"{t}"' for t in topic["tags"]) + "]"
@@ -319,6 +326,37 @@ thumbImage: "/blog-images/{slug}/thumb.jpg"
     filepath.write_text(frontmatter + content, encoding="utf-8")
     print(f"  Saved: {filepath}")
     return filepath
+
+
+# ── Cover image generation ────────────────────────────────────────────────────
+
+def generate_cover(topic):
+    """
+    Calls generate-cover.js (Puppeteer) to render cover.jpg + thumb.jpg into
+    public/blog-images/{slug}/, matching the paths save_as_mdx() already
+    wrote into the post's frontmatter (coverImage/thumbImage). Falls back
+    to a warning rather than failing the whole post if Puppeteer or Node
+    isn't available, a post with no cover/thumb is recoverable, a failed
+    pipeline run partway through generating content is not.
+    """
+    if SKIP_COVERS or not COVER_SCRIPT.exists():
+        return False
+
+    slug = topic["slug"]
+    output_dir = PUBLIC_BLOG_IMAGES_DIR / slug
+    try:
+        result = subprocess.run(
+            ["node", str(COVER_SCRIPT), topic["title"], topic["type"], str(output_dir)],
+            capture_output=True, text=True, timeout=30
+        )
+        if result.returncode == 0:
+            print(result.stdout.strip())
+            return True
+        print(f"  Cover failed: {result.stderr.strip()}")
+        return False
+    except Exception as e:
+        print(f"  Cover error: {e}")
+        return False
 
 
 # ── Topic picker ──────────────────────────────────────────────────────────────
@@ -405,6 +443,7 @@ def main():
         try:
             content = generate_post(topic)
             save_as_mdx(topic, content)
+            generate_cover(topic)
             generated += 1
             if i < len(topics):
                 time.sleep(5)
@@ -419,7 +458,7 @@ def main():
         print(f"     but don't guarantee good writing, still needs a human pass.")
         print(f"  2. Add this run's slugs/titles to BLOG_INTERNAL_LINKS in blog_topics.py")
         print(f"     so future posts can link back to them.")
-        print(f"  git add content/blog/")
+        print(f"  git add content/blog/ public/blog-images/")
         print(f"  git commit -m 'blog: add new posts'")
         print(f"  git push")
 

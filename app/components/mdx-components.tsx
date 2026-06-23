@@ -35,4 +35,5 @@ export const mdxComponents: MDXComponents = {
     return <a href={href} target="_blank" rel="noopener noreferrer" className="mdx-link mdx-link-external" {...rest} />
   },
   blockquote: (props) => <blockquote className="mdx-blockquote" {...props} />,
+  hr: (props) => <hr className="mdx-hr" {...props} />,
 }

@@ -122,6 +122,11 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
           padding-left:1.25rem; margin:1.5rem 0;
           font-style:italic; color:rgba(255,255,255,0.55);
         }
+        .mdx-hr {
+          border:none; height:1px;
+          background:rgba(255,255,255,0.1);
+          margin:2.5rem 0;
+        }
 
         .mdx-table-wrap { overflow-x:auto; margin:1.5rem 0 2rem }
         .mdx-table { width:100%; border-collapse:collapse; font-size:14px }
