@@ -170,7 +170,7 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
             <div className="cs-footer-explore">
               <a href="/guide">Local Guide</a>
               <a href="/places" className="soon">Places we love</a>
-              <a href="/blog" className="soon">Blog</a>
+              <a href="/blog">Blog</a>
             </div>
             <div className="cs-footer-love">Built with 🩶 in Manali</div>
           </div>

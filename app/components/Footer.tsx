@@ -99,7 +99,7 @@ export default function Footer() {
           <div className="footer-explore">
             <a href="/guide">Local Guide</a>
             <a href="/places" className="soon">Places we love</a>
-            <a href="/blog" className="soon">Blog</a>
+            <a href="/blog">Blog</a>
           </div>
 
           <div className="footer-love">Built with 🩶 in Manali</div>

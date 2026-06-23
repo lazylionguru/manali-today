@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   },
   outputFileTracingIncludes: {
     '/guide/[slug]': ['./content/guides/**/*'],
+    '/blog/[slug]': ['./content/blog/**/*'],
   },
 }
 
