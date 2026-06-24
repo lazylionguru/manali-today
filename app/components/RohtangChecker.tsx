@@ -146,6 +146,8 @@ export default function RohtangChecker() {
   })
   const faqAnswer = `As of the last update on ${lastUpdatedAnchorFormatted}, Rohtang Pass is ${effectiveStatus}. ${status.note}. A permit is required to visit, available through the Himachal Pradesh government portal. This status is confirmed directly by a local resident with access to on-the-ground conditions, not an automated feed — pass status can change without notice due to weather, snowfall, or scheduled closures, so refer back here for the current update before you travel.`
 
+  const tuesdayFaqAnswer = `Yes. Rohtang Pass is closed every Tuesday for routine maintenance, regardless of weather or season. This is a standing weekly closure, separate from any weather-related or snowfall closures, so the pass stays shut on Tuesdays even on a clear day. Plan your visit for any other day of the week, and check this page for the current status closer to your travel date in case of additional weather-related closures.`
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -156,6 +158,14 @@ export default function RohtangChecker() {
         acceptedAnswer: {
           '@type': 'Answer',
           text: faqAnswer,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is Rohtang Pass closed on Tuesdays?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: tuesdayFaqAnswer,
         },
       },
     ],
