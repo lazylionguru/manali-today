@@ -60,6 +60,36 @@ export const metadata: Metadata = {
   },
 }
 
+// Organization + WebSite JSON-LD, rendered site-wide via the root layout so
+// every page on manali.today carries this identity/trust context, not just
+// the homepage. logo points at the 512x512 favicon since it's already a
+// clean square image, matching Google's preferred format for this field,
+// the 1200x630 OG banner is the wrong aspect ratio for a "logo".
+// sameAs links to Narender's real personal profiles (not branded
+// manali.today accounts, since none exist yet), which is an honest,
+// deliberate choice: it reinforces "a real, findable person built and
+// runs this" rather than implying an organization with its own social
+// presence that doesn't exist.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Manali.today',
+  url: 'https://manali.today',
+  logo: 'https://manali.today/android-chrome-512x512.png',
+  sameAs: [
+    'https://x.com/0xnarender',
+    'https://linkedin.com/in/lazylion',
+    'https://narender.xyz',
+  ],
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Manali.today',
+  url: 'https://manali.today',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -68,6 +98,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <Script
           defer
           data-site="h75ht2do"
