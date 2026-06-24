@@ -30,8 +30,8 @@ from blog_topics import TOPICS, INTERNAL_LINKS, BLOG_INTERNAL_LINKS, APPROVED_EX
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEEPSEEK_API_KEY = os.environ["DEEPSEEK_KEY"]
-POSTS_PER_RUN    = int(os.environ.get("POSTS_PER_RUN", "6"))
-CANDIDATE_COUNT  = int(os.environ.get("CANDIDATE_COUNT", "12"))
+POSTS_PER_RUN    = int(os.environ.get("POSTS_PER_RUN", "14"))
+CANDIDATE_COUNT  = int(os.environ.get("CANDIDATE_COUNT", "24"))
 AUTO_MODE        = os.environ.get("AUTO_MODE", "false").lower() == "true"
 SKIP_COVERS      = os.environ.get("SKIP_COVERS", "false").lower() == "true"
 
@@ -161,6 +161,33 @@ End with a short closing paragraph, not a generic CTA, just a real closing thoug
 """
 
     if t == "seasonal_event":
+        if topic["slug"].startswith("is-") and "good-time-visit-manali" in topic["slug"]:
+            month_name = topic["title"].split("Is ")[1].split(" a Good Time")[0]
+            return base + f"""Write this as a direct answer to the question "{topic['title']}", the kind
+of post that should satisfy someone who typed that exact question into Google. Structure:
+
+## The Short Answer
+Open with a direct, honest yes/no/it-depends answer for {month_name}, in one or two sentences,
+based strictly on the seed facts. Don't bury the answer, lead with it.
+
+## What {month_name} Is Actually Like
+Ground this in the seed facts, weather pattern, crowd level, road conditions for this specific
+month. Avoid stating precise temperature or rainfall numbers you weren't given, describe the
+pattern honestly instead (e.g. "cold and likely snowy" rather than inventing a specific degree
+figure).
+
+## What to Plan Around
+Practical implications specific to {month_name}, road risk, what to pack, what to book ahead,
+whatever the seed facts actually support. Tie in a live status checker link naturally if a seed
+fact mentions checking road/pass status, don't force it otherwise.
+
+## Who Should (and Shouldn't) Come in {month_name}
+Honest, specific. What kind of traveler this month suits, and who would have a better trip in a
+different month instead.
+
+End with a short, honest closing paragraph in Narender's voice, not a generic CTA.
+"""
+
         return base + """Write this as a seasonal explainer post, the kind of thing that ranks for
 "is X happening now" or "when does X happen" searches. Structure:
 
