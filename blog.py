@@ -26,7 +26,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-from blog_topics import TOPICS, INTERNAL_LINKS, BLOG_INTERNAL_LINKS, APPROVED_EXTERNAL_DOMAINS
+from blog_topics import TOPICS, INTERNAL_LINKS, BLOG_INTERNAL_LINKS, APPROVED_EXTERNAL_DOMAINS, ATAL_TUNNEL_INTERNAL_LINK, ATAL_TUNNEL_CLUSTER_SLUGS
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEEPSEEK_API_KEY = os.environ["DEEPSEEK_KEY"]
@@ -100,7 +100,15 @@ def build_prompt(topic):
     if not seed_facts:
         raise ValueError(f"Topic '{topic['slug']}' has no seed_facts. Add at least 2-3 before generating.")
 
-    internal = random.sample(INTERNAL_LINKS, min(4, len(INTERNAL_LINKS)))
+    if topic["slug"] in ATAL_TUNNEL_CLUSTER_SLUGS:
+        # This entire cluster exists to reinforce the Atal Tunnel checker's
+        # ranking for "is atal tunnel open today" and related queries, so
+        # the link back to it is forced in every post, never left to random
+        # sampling which could otherwise skip it on a given run.
+        remaining_pool = [link for link in INTERNAL_LINKS if link != ATAL_TUNNEL_INTERNAL_LINK]
+        internal = [ATAL_TUNNEL_INTERNAL_LINK] + random.sample(remaining_pool, min(2, len(remaining_pool)))
+    else:
+        internal = random.sample(INTERNAL_LINKS, min(4, len(INTERNAL_LINKS)))
     blog_links = random.sample(BLOG_INTERNAL_LINKS, min(3, len(BLOG_INTERNAL_LINKS))) if BLOG_INTERNAL_LINKS else []
     internal_str = "\n".join([f"- [{text}]({url})" for text, url in internal])
     blog_str = "\n".join([f"- [{text}]({url})" for text, url in blog_links]) if blog_links else "(none published yet, skip this section)"
@@ -137,6 +145,160 @@ other manali.today URL that isn't listed above.
 POST TITLE: {topic['title']}
 TARGET KEYWORD: {topic.get('keyword', '')}
 """
+
+    if t == "atal_tunnel_feature":
+        slug = topic["slug"]
+
+        if slug == "my-father-bro-atal-tunnel-personal":
+            return base + """Write this as a personal essay in Narender's voice, opening from his
+own family connection to BRO. Structure:
+
+## Why This One Is Personal
+Open with the fact that his father served with BRO, the organisation that built Atal Tunnel.
+Keep this general, no invented specifics about rank, years, or postings, just the honest fact
+of the connection and what it means to him watching tourists drive through something his
+father's organisation builds roads and infrastructure like every day.
+
+## What BRO Actually Does
+Ground this in the seed facts about BRO's scope and mandate, most people who drive through the
+tunnel have no idea what organisation built it or what else that organisation does.
+
+## What a Project Like This Actually Costs
+Use the seed facts about construction method, the south-portal-only excavation years, and the
+2003 cloudburst that killed 42 labourers. Handle the deaths with real weight and respect, not as
+a dramatic hook, this is a genuine human cost behind something people now drive through in
+fifteen minutes without a thought.
+
+## What I Think About When I Drive Through It
+A closing, reflective paragraph in Narender's voice tying his personal connection back to the
+checker page he runs, check live Atal Tunnel status, since he's spent years watching this exact
+road's conditions.
+
+End with a short, honest closing paragraph, not a generic CTA.
+"""
+
+        if slug == "lahaul-before-atal-tunnel-six-months-cut-off":
+            return base + """Write this as a human-interest history piece on what Lahaul valley was
+actually like before the tunnel existed. Structure:
+
+## Six to Eight Months, Cut Off
+Ground this in the seed facts about the winter isolation, what it actually meant logistically
+for people living there.
+
+## What People Actually Did
+Use the seed facts about stocking rations, the helicopter medical evacuations, and the real,
+weighty detail of villagers carrying the sick across Rohtang Pass on their backs. Handle this
+with real respect, these are real people's hardships, not adventure-travel color.
+
+## It Isn't Entirely in the Past
+Use the seed fact about Koksar and nearby villages still experiencing seasonal migration even
+now, the tunnel changed most of the valley's life but not all of it evenly.
+
+## Why This Matters When You Drive Through Today
+Closing reflection tying this history to what visitors see today, check live Atal Tunnel status
+naturally if it fits, don't force it.
+
+End with a short, honest closing paragraph, not a generic CTA.
+"""
+
+        if slug == "atal-tunnel-national-security-significance":
+            return base + """Write this as a factual, sourced explainer on why Atal Tunnel matters
+beyond tourism. Structure:
+
+## More Than a Tourist Attraction
+Ground this in the seed facts about NH3, the Leh-Manali highway, and the tunnel's role in
+year-round connectivity to strategically important border areas.
+
+## What Changed
+Use the seed facts about distance/time savings and what the corridor was like before the tunnel,
+unusable for half the year for everyone including the armed forces.
+
+## Staying Honest About What I Can and Can't Say
+Explicitly state, in Narender's voice, that he is not a defence analyst and won't speculate on
+troop movements, capability assessments, or anything beyond what's publicly known and widely
+reported. This is a factual significance piece, not military analysis.
+
+## Why I Still Check on This Every Day
+Closing paragraph connecting the tunnel's broader significance to the practical reality that its
+status still needs checking daily, check live Atal Tunnel status, weather and conditions don't
+care about strategic importance.
+
+End with a short, honest closing paragraph, not a generic CTA.
+"""
+
+        if slug == "atal-tunnel-visitor-access-guide":
+            return base + """Write this as a practical visitor guide. Structure:
+
+## What You Actually Need to Know Before You Go
+Ground this in the seed facts: no permit needed (unlike Rohtang), 24/7 access in normal
+conditions, drive time, and that closures do happen, so check live Atal Tunnel status before
+planning around it rather than assuming.
+
+## Inside the Tunnel
+What it's actually like, no stops allowed, what's available near both portals from the seed
+facts.
+
+## The Contrast That Makes It Worth Doing
+Use the seed fact about the dramatic difference between the green Manali side and stark Lahaul
+side, this is genuinely part of the appeal.
+
+## Practical Notes
+Fuel, timing, anything else from the seed facts. Skip anything not supported by a seed fact.
+
+End with a short closing paragraph in Narender's voice, not a generic CTA.
+"""
+
+        if slug == "atal-tunnel-changed-lahaul-locals-life":
+            return base + """Write this as a piece specifically about local impact, not tourist
+impact. Structure:
+
+## A Different Kind of Before and After
+Frame this explicitly as being about the people who live in Lahaul year-round, not visitors.
+
+## What Actually Changed
+Ground this in the seed facts: migration largely stopping, better doctor access, shorter
+rationing windows, year-round market access for farmers.
+
+## What Didn't Fully Change
+Use the seed fact about buses still pausing in heavy snowfall, be honest this is a real but
+partial improvement, not a complete fix, don't oversell it.
+
+## Why This Is the Real Story
+Closing reflection on why this local-impact angle matters more than the tourism angle, tie back
+to checking live Atal Tunnel status as relevant since conditions still affect locals daily too.
+
+End with a short, honest closing paragraph, not a generic CTA.
+"""
+
+        if slug == "atal-tunnel-engineering-how-it-was-built":
+            return base + """Write this as an engineering/construction deep-dive. Structure:
+
+## An Idea That Took 150 Years
+Ground this in the seed fact about the 1860 Moravian Mission proposal and 1942 GSI proposal,
+long before construction actually started in 2010.
+
+## Ten Years to Build 9 Kilometers
+Use the seed facts about construction method (drill and blast, NATM, not TBM) and why.
+
+## The Seri Nala Fault Zone
+This is the single most striking technical detail, use the seed fact about 587 metres taking
+over four years, give it real weight, this is what made the project genuinely hard.
+
+## What Else They Were Up Against
+Use the remaining seed facts: avalanche sites, excavated material disposal, water seepage.
+
+## What's Actually Inside the Tunnel
+Ventilation, lighting, safety systems from the seed facts.
+
+## A Real Engineering Distinction
+Close with the world's-longest-above-10,000-feet fact, framed honestly as a real distinction,
+not hype, and a closing line connecting back to checking live Atal Tunnel status since even
+something this engineered can still close for weather.
+
+End with a short closing paragraph in Narender's voice, not a generic CTA.
+"""
+
+        return base + "Write a grounded, specific, first-person post on this Atal Tunnel angle using only the seed facts provided.\n"
 
     if t == "village":
         return base + """Write this as a guide to a specific village or neighbourhood. Structure:
@@ -208,6 +370,155 @@ Light mention that conditions change and the live checkers on manali.today are t
 current status, only if this fits naturally, don't force a sales pitch.
 
 End with a short, honest closing paragraph in Narender's voice.
+"""
+
+    if t == "culture":
+        if topic["slug"] == "my-father-bro-atal-tunnel-personal":
+            return base + """Write this as a piece with a personal thread running through it, in
+Narender's voice, but the headline and opening should lead with what the post is actually about:
+what a road like this really costs to build, not with the personal detail itself. Structure:
+
+## What People Don't See When They Drive Through in Fifteen Minutes
+Open with the real subject of the post: most people cross this tunnel in fifteen minutes without
+a thought for what it took to build. This is the actual hook, not the personal connection.
+
+## A Personal Note
+A few sentences in, or in this section, naturally mention the personal connection (his father's
+BRO service, kept general per his wishes, no specific years, postings, or projects, just the fact
+of the service itself). State it once, plainly, without over-explaining why it's kept vague, and
+move on. This should read as natural context, not the headline event of the post.
+
+## What BRO Actually Does
+Ground this in the seed facts, what BRO is, its mandate, the kind of work it does beyond this one
+tunnel.
+
+## What a Project Like This Actually Costs
+Use the seed facts on construction method, the 2003 cloudburst deaths, the years of work from one
+portal only. Be matter-of-fact and respectful, not dramatic or exploitative of the tragedy, state
+it plainly and let it carry its own weight. This section is also the natural place to use the live
+Atal Tunnel status checker link from the internal links list, since the contrast between a fifteen
+minute drive today and what it took to build works well alongside a mention of checking conditions
+before you go.
+
+## Why This Stays With Me
+Close on a brief, personal, reflective note tying back to the opening. Not sentimental padding,
+a genuine closing thought, understated rather than heavy-handed.
+
+This post should read more personal and slower than Narender's other posts, but the personal
+detail is texture inside the piece, not the headline, and never invent emotional detail or a
+specific anecdote beyond the seed facts. Every internal link listed above, including the Atal
+Tunnel checker link, must still appear exactly once somewhere in this post.
+"""
+        if topic["slug"] == "lahaul-before-atal-tunnel-six-months-cut-off":
+            return base + """Write this as a vivid, grounded historical piece on what life in
+Lahaul was actually like before the tunnel existed. Structure:
+
+## Six Months, Cut Off
+Open with the core fact: Rohtang closing for winter meant total isolation for roughly six to
+eight months. Ground this immediately in the seed facts.
+
+## What That Actually Meant, Day to Day
+Use the seed facts on rationing, the migration pattern, what happened during medical emergencies
+including the detail about carrying people across the pass before helicopters were reliable. Be
+specific and human, not abstract.
+
+## What Still Happens Today, Even With the Tunnel
+Use the seed fact about villages near Koksar still experiencing seasonal migration due to heavy
+snowfall, this keeps the piece honest rather than implying everything is solved.
+
+## Why This Context Matters
+A short closing thought tying this history to why the tunnel is genuinely significant, not just
+as an engineering story but as a human one.
+
+End with a short closing paragraph in Narender's voice, not a generic CTA.
+"""
+        if topic["slug"] == "atal-tunnel-changed-lahaul-locals-life":
+            return base + """Write this as a grounded, human-focused piece on what changed for
+people who actually live in Lahaul, not tourists. Structure:
+
+## What Changed, Concretely
+Use the seed facts: migration patterns, healthcare access, ration stockpiling, market access.
+Be specific and grounded, not abstract ("life improved") but concrete ("doctors are now more
+willing to be posted here").
+
+## What Hasn't Fully Changed
+Honest about the limits, e.g. bus services still pausing in heavy snowfall even with the tunnel
+open. Don't oversell this as a complete fix.
+
+## Why This Is the Real Story
+Narender's direct take: this is a bigger deal for the people who live here than for the tourists
+who drive through it once. Tie in a checker link naturally if it fits.
+
+End with a short, honest closing paragraph in Narender's voice.
+"""
+        return base + """Write a grounded, specific, first-person post on this cultural/historical
+topic using only the seed facts provided. Be honest and matter-of-fact, not sentimental.
+"""
+
+    if t == "practical":
+        if topic["slug"] == "atal-tunnel-national-security-significance":
+            return base + """Write this as a factual, sourced explainer on why Atal Tunnel matters
+beyond tourism. Structure:
+
+## The Short Version
+One or two sentences stating plainly why this tunnel matters strategically, grounded in the seed
+facts only.
+
+## What It Actually Changed
+Use the seed facts on distance/time reduction and year-round access, tie this to the broader
+significance without speculating on specifics not given to you.
+
+## Where Narender Draws the Line
+Include the seed fact about not being a defence analyst and not speculating on troop movements or
+capability specifics. State this honestly as a boundary, not an excuse, this is what's publicly
+known and reported, not insider knowledge.
+
+## Why This Matters to Everyone, Not Just Defence
+Tie back to how this same infrastructure benefits ordinary travel and Lahaul residents, connecting
+to the practical, everyday reality rather than ending on a purely geopolitical note.
+
+Stay strictly factual throughout. Do not speculate beyond the seed facts at any point in this post.
+"""
+        if topic["slug"] == "atal-tunnel-engineering-how-it-was-built":
+            return base + """Write this as a technical deep-dive on how the tunnel was actually
+built, for readers who want the real engineering story, not just the highlight reel. Structure:
+
+## The Idea, Long Before It Was Real
+Use the seed facts on how far back this was first proposed and how long it took to actually begin.
+
+## The Build Itself
+Use the seed facts on construction method (drill and blast, New Austrian Tunnelling Method), the
+biggest obstacles (the fault zone, avalanche-prone sites, water seepage, excavated material
+volume). Be specific and technical where the seed facts support it, general where they don't.
+
+## What Makes It a Genuine Engineering Achievement
+Tie together the altitude, the terrain, the safety systems, why this is a real distinction and not
+just marketing language. This is also a natural place to mention checking the live Atal Tunnel
+status before relying on the tunnel being passable, since even a well-engineered tunnel still
+closes for weather and maintenance, use the checker link from the internal links list here.
+
+End with a short closing paragraph in Narender's voice, not a generic CTA. Every internal link
+listed above, including the Atal Tunnel checker link, must still appear exactly once in this post.
+"""
+        if topic["slug"] == "atal-tunnel-visitor-access-guide":
+            return base + """Write this as a practical, no-fluff guide for tourists actually
+planning to drive through Atal Tunnel. Structure:
+
+## What You Actually Need to Know
+Permit requirements (none, unlike Rohtang), timings, drive duration, all from the seed facts.
+
+## What to Expect Inside and at Both Portals
+The contrast between south and north portal, what's allowed and not allowed, facilities nearby.
+
+## What Can Go Wrong
+Closures, weather risk, fuel availability, grounded in the seed facts. Tie in a live status
+checker link naturally here, this is the most natural place for it in this post.
+
+## Narender's Honest Take
+A short, direct closing recommendation, not a generic CTA.
+"""
+        return base + """Write a grounded, specific, first-person post on this practical/factual
+topic using only the seed facts provided. Stay factual and avoid speculation beyond the seed facts.
 """
 
     if t == "trek":

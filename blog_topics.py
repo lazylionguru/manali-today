@@ -392,6 +392,109 @@ TOPICS = [
         ],
     },
 
+    # ── ATAL TUNNEL CONTENT CLUSTER ──────────────────────────────────────────
+    # Six posts deliberately built to reinforce the checker page's authority
+    # for "is atal tunnel open today" and related queries. Every post here
+    # MUST link back to https://manali.today/is-atal-tunnel-open-today using
+    # natural anchor text, this is a deliberate internal-linking push, not
+    # incidental. Facts sourced from Wikipedia, BRO's own official site
+    # (marvels.bro.gov.in), SMEC (the engineering consultancy on the
+    # project), Geospatial World's case study, and ETV Bharat's reporting
+    # with real local testimony. Narender's father served with BRO,
+    # mentioned generally per his preference, no specific years, postings,
+    # or projects, since he asked to keep it vague.
+
+    {
+        "slug": "my-father-bro-atal-tunnel-personal",
+        "title": "What a Road Like Atal Tunnel Actually Costs to Build",
+        "keyword": "atal tunnel BRO",
+        "type": "culture",
+        "tags": ["atalTunnel", "BRO", "personal", "history"],
+        "seed_facts": [
+            "My father served with the Border Roads Organisation, the same organisation that built Atal Tunnel, I'm keeping the specifics of his service general out of respect for his privacy",
+            "BRO is a tri-service organisation under India's Ministry of Defence, specialising in road and bridge construction in difficult terrain, it has built over 50,000 km of roads and 450+ permanent bridges across India's border regions",
+            "BRO also does the unglamorous, constant work of snow clearance and disaster response in places like this, not just headline projects",
+            "Atal Tunnel was built using the drill and blast technique with the New Austrian Tunnelling Method, not a tunnel boring machine, because TBMs risked jamming in the high deformation and pressure conditions of this terrain",
+            "A cloudburst and flash flood on 8 August 2003 killed 42 labourers building the temporary access road, a real human cost behind a project people now just drive through in fifteen minutes",
+            "Excavation had to happen mostly from the south portal alone for years, since the north portal was snowed in and inaccessible for more than half the year",
+        ],
+    },
+    {
+        "slug": "lahaul-before-atal-tunnel-six-months-cut-off",
+        "title": "What Lahaul Was Actually Like Before Atal Tunnel Existed",
+        "keyword": "lahaul before atal tunnel",
+        "type": "culture",
+        "tags": ["atalTunnel", "lahaul", "history", "preTunnelEra"],
+        "seed_facts": [
+            "Before the tunnel, Rohtang Pass closing for winter meant Lahaul valley was cut off from the rest of Himachal for roughly six to eight months a year",
+            "Residents had to stock six months of rations, fuel, and fodder by October, since nothing could move in or out once the snow closed Rohtang",
+            "Medical emergencies during the cut-off months depended on helicopter evacuation, and sometimes the helicopter couldn't fly because of weather, people have died waiting",
+            "Before helicopters were reliably available, villagers carried sick people on their backs across Rohtang Pass at over 13,000 feet to reach Manali",
+            "Over 60% of Lahaul's roughly 18,000 residents used to migrate to Kullu every winter before the tunnel, leaving only those who had to stay back with livestock or family who couldn't travel",
+            "Some villages near Koksar, just a few kilometers from the tunnel's north portal, still experience heavy enough snowfall that residents migrate seasonally even now",
+        ],
+    },
+    {
+        "slug": "atal-tunnel-national-security-significance",
+        "title": "Why Atal Tunnel Matters Far Beyond Tourism",
+        "keyword": "atal tunnel importance",
+        "type": "practical",
+        "tags": ["atalTunnel", "nationalSecurity", "significance", "leh"],
+        "seed_facts": [
+            "Atal Tunnel sits on NH3, the Leh-Manali highway, and was built specifically to ensure all-season, all-weather connectivity to strategically important areas near India's border with Ladakh",
+            "The tunnel cuts the Manali-Keylong distance by 46 km and travel time by 4 to 5 hours, a meaningful difference for both civilian movement and any military logistics along this corridor",
+            "Before the tunnel, that whole stretch toward Leh and Ladakh was simply unusable for half the year whenever Rohtang Pass snowed in, including for the armed forces",
+            "BRO, the organisation that built it, is explicitly tasked with developing and maintaining strategic road infrastructure in India's border regions, this tunnel sits squarely in that mandate, not just a tourism project",
+            "I'm not a defence analyst and won't speculate on troop movements or capability specifics, what's publicly known and widely reported is that year-round access through this corridor matters strategically, that's the honest, factual version of this story",
+        ],
+    },
+    {
+        "slug": "atal-tunnel-visitor-access-guide",
+        "title": "Visiting Atal Tunnel: What Tourists Actually Need to Know",
+        "keyword": "atal tunnel tourist guide",
+        "type": "practical",
+        "tags": ["atalTunnel", "touristGuide", "practical"],
+        "seed_facts": [
+            "Unlike Rohtang Pass, Atal Tunnel itself needs no permit, all vehicles, private or commercial, can enter without restriction",
+            "The tunnel is open 24/7 in normal conditions, the actual drive through takes under 15 minutes since it's about 9 km long",
+            "Closures do happen, weather advisories, avalanche risk, scheduled maintenance, or emergencies can shut it temporarily, check live Atal Tunnel status before you plan around it rather than assuming it's always open",
+            "There are no stops allowed inside the tunnel itself, but cafes and dhabas exist near both the south portal (Manali side) and north portal (Sissu side)",
+            "The two sides look completely different, lush green Kullu valley on the south portal side, dry and stark Lahaul terrain on the north portal side, the contrast itself is part of why people make the trip",
+            "No fuel stations exist right around the tunnel or in Sissu, start with a full tank if you're heading toward Lahaul or beyond",
+        ],
+    },
+    {
+        "slug": "atal-tunnel-changed-lahaul-locals-life",
+        "title": "What Year-Round Access Actually Changed for the People Who Live in Lahaul",
+        "keyword": "atal tunnel lahaul locals",
+        "type": "culture",
+        "tags": ["atalTunnel", "lahaul", "localImpact"],
+        "seed_facts": [
+            "Since the tunnel opened, the mass winter migration out of Lahaul has largely stopped, families don't have to leave their homes and livestock for months anymore",
+            "Doctors are now more willing to be posted in Lahaul valley since the area isn't cut off for half the year, which means actual improved access to healthcare for residents, not just tourists",
+            "Rations now only need to be stocked for two to three months instead of six, some households don't need to stockpile at all anymore",
+            "Farmers and producers in Lahaul can now move agricultural produce to Kullu and Manali markets year-round instead of being limited to a short summer window",
+            "Bus services still pause during heavy snowfall even with the tunnel open, but private and 4x4 vehicles can usually still get through, a real but partial improvement, not a total fix",
+            "This is a genuine, ongoing change for people who actually live here year-round, not just a convenience for tourists passing through",
+        ],
+    },
+    {
+        "slug": "atal-tunnel-engineering-how-it-was-built",
+        "title": "How Atal Tunnel Was Actually Built: The Engineering Behind It",
+        "keyword": "atal tunnel engineering construction",
+        "type": "practical",
+        "tags": ["atalTunnel", "engineering", "construction", "BRO"],
+        "seed_facts": [
+            "The idea of a tunnel under Rohtang Pass was first discussed as early as 1860 by the Moravian Mission, and seriously proposed again in 1942 by a Geological Survey of India geologist, it took until 2010 for construction to actually begin",
+            "Construction began in 2010 and the tunnel was completed in 2020, ten years, largely because of the terrain and weather, not bureaucratic delay alone",
+            "Built using the drill and blast technique with the New Austrian Tunnelling Method rather than a tunnel boring machine, TBMs risked jamming under the high deformation and pressure of this specific geology",
+            "The single biggest obstacle was the Seri Nala fault zone, a shear zone so severe that excavating just 587 metres of it took over four years, the rest of the entire 8.5 km tunnel took roughly the same amount of time",
+            "Engineers faced more than 46 avalanche-prone sites on the approaches, had to dispose of over 800,000 cubic metres of excavated rock and soil, and at times dealt with up to 3,000,000 litres of water seepage a day requiring constant dewatering",
+            "The tunnel has a semi-transverse ventilation system, SCADA-controlled lighting, fire safety systems, and a separate emergency escape passage built beneath the main road level, genuinely advanced engineering for this altitude and terrain",
+            "It's the longest highway tunnel in the world above 10,000 feet, at roughly 3,100 metres elevation, a real engineering distinction, not just a tourist marketing line",
+        ],
+    },
+
 ]
 
 
@@ -406,6 +509,27 @@ INTERNAL_LINKS = [
     ("the complete Manali travel guide", "https://manali.today/guide/manali"),
 ]
 
+# Used by blog.py to force-include this exact link in every post in the
+# Atal Tunnel content cluster, rather than leaving it to random sampling.
+# Looked up by URL rather than list position, so reordering INTERNAL_LINKS
+# above can never silently break this reference.
+ATAL_TUNNEL_INTERNAL_LINK = next(
+    link for link in INTERNAL_LINKS if link[1] == "https://manali.today/is-atal-tunnel-open-today"
+)
+
+# The six Atal Tunnel cluster posts are spread across culture/practical types
+# (not one shared type), so blog.py can't detect cluster membership from
+# `type` alone. This explicit slug set is the actual source of truth for
+# "is this an Atal Tunnel cluster post that must force-link the checker".
+ATAL_TUNNEL_CLUSTER_SLUGS = {
+    "my-father-bro-atal-tunnel-personal",
+    "lahaul-before-atal-tunnel-six-months-cut-off",
+    "atal-tunnel-national-security-significance",
+    "atal-tunnel-visitor-access-guide",
+    "atal-tunnel-changed-lahaul-locals-life",
+    "atal-tunnel-engineering-how-it-was-built",
+}
+
 
 # ── Published blog post links ─────────────────────────────────────────────────
 # Sampled per post in blog.py. Add new posts here as they go live, so future
@@ -413,18 +537,38 @@ INTERNAL_LINKS = [
 # published in content/blog/ — blog.py does not auto-discover these.
 
 BLOG_INTERNAL_LINKS = [
+    ("What Year-Round Access Actually Changed for the People Who Live in Lahaul", "https://manali.today/blog/atal-tunnel-changed-lahaul-locals-life"),
+    ("How Atal Tunnel Was Actually Built: The Engineering Behind It", "https://manali.today/blog/atal-tunnel-engineering-how-it-was-built"),
+    ("Why Atal Tunnel Matters Far Beyond Tourism", "https://manali.today/blog/atal-tunnel-national-security-significance"),
+    ("Visiting Atal Tunnel: What Tourists Actually Need to Know", "https://manali.today/blog/atal-tunnel-visitor-access-guide"),
     ("The Hidden Trail to Baghi Meadow Through Bhanara and Nag Devta Temple", "https://manali.today/blog/bhanara-nag-devta-baghi-hidden-trail"),
     ("Burwa, Manali: The Quiet Side of the Valley Most Tourists Never Find", "https://manali.today/blog/burwa-village-manali-guide"),
     ("First Snowfall of the Season in Manali: What It Actually Means for Your Trip", "https://manali.today/blog/first-snowfall-manali-2026-2027-season"),
     ("Gondhla Fort: The 400-Year-Old Ruin Past Atal Tunnel Nobody Stops For", "https://manali.today/blog/gondhla-fort-atal-tunnel-detour"),
+    ("Is April a Good Time to Visit Manali?", "https://manali.today/blog/is-april-good-time-visit-manali"),
+    ("Is August a Good Time to Visit Manali?", "https://manali.today/blog/is-august-good-time-visit-manali"),
+    ("Is December a Good Time to Visit Manali?", "https://manali.today/blog/is-december-good-time-visit-manali"),
+    ("Is February a Good Time to Visit Manali?", "https://manali.today/blog/is-february-good-time-visit-manali"),
+    ("Is January a Good Time to Visit Manali?", "https://manali.today/blog/is-january-good-time-visit-manali"),
+    ("Is July a Good Time to Visit Manali?", "https://manali.today/blog/is-july-good-time-visit-manali"),
+    ("Is June a Good Time to Visit Manali?", "https://manali.today/blog/is-june-good-time-visit-manali"),
+    ("Is March a Good Time to Visit Manali?", "https://manali.today/blog/is-march-good-time-visit-manali"),
+    ("Is May a Good Time to Visit Manali?", "https://manali.today/blog/is-may-good-time-visit-manali"),
+    ("Is November a Good Time to Visit Manali?", "https://manali.today/blog/is-november-good-time-visit-manali"),
+    ("Is October a Good Time to Visit Manali?", "https://manali.today/blog/is-october-good-time-visit-manali"),
+    ("Is September a Good Time to Visit Manali?", "https://manali.today/blog/is-september-good-time-visit-manali"),
     ("Jagatsukh: The Forgotten Original Capital of Kullu, 6 km From Manali", "https://manali.today/blog/jagatsukh-village-history-manali"),
+    ("The Kharma Valley Hike to Suicide Point: A Real Trail Guide From Old Manali", "https://manali.today/blog/kharma-valley-suicide-point-hike-old-manali"),
+    ("What Lahaul Was Actually Like Before Atal Tunnel Existed", "https://manali.today/blog/lahaul-before-atal-tunnel-six-months-cut-off"),
     ("Why I Tell People to Skip Manali in the Monsoon Window", "https://manali.today/blog/manali-monsoon-landslide-season-guide"),
     ("Why Manali Traffic Photos Online Are Missing the Point", "https://manali.today/blog/manali-peak-summer-traffic-survival-guide"),
+    ("What a Road Like Atal Tunnel Actually Costs to Build", "https://manali.today/blog/my-father-bro-atal-tunnel-personal"),
     ("Naggar: Kullu's Second Capital, and the Russian Painter Who Never Left", "https://manali.today/blog/naggar-castle-history-manali"),
     ("Old Manali: Where I Actually Live, and How I'd Spend a Day There", "https://manali.today/blog/old-manali-guide-cafes-hikes"),
     ("The Three Meadows Trail From Rocky's Cafe in Old Manali", "https://manali.today/blog/rockys-cafe-meadows-trek-old-manali"),
     ("When Rohtang Pass Actually Opens Each Year, and Why the Date Moves", "https://manali.today/blog/rohtang-pass-opening-date-season"),
     ("Sethan: The Village Where the Pandavas Reportedly Hid, Now a Quiet Escape", "https://manali.today/blog/sethan-village-offbeat-manali"),
+    ("Shanag Village, Manali: Why I'd Stay Here Over Mall Road", "https://manali.today/blog/shanag-village-manali-guide"),
     ("Solang Valley Paragliding: When to Actually Go, and What I'd Skip", "https://manali.today/blog/solang-valley-paragliding-guide"),
 ]
 
