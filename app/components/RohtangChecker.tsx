@@ -219,11 +219,30 @@ export default function RohtangChecker() {
 
   const formattedLastUpdated = formatLastUpdated(lastUpdated)
 
+  // WebPage schema, separate from FAQPage above since dateModified is not a
+  // valid property of FAQPage in the schema.org spec (it belongs to
+  // CreativeWork, which WebPage inherits from). dateModified is set to the
+  // exact same lastUpdated value already driving the visible "Last updated"
+  // text on the page, so this is a real, accurate freshness signal, not an
+  // artificially bumped timestamp, it only changes when the underlying
+  // computeLastUpdated() step actually advances.
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Is Rohtang Pass Open Today?',
+    url: 'https://manali.today/is-rohtang-pass-open-today',
+    dateModified: lastUpdated.toISOString(),
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
 
       <style>{`
