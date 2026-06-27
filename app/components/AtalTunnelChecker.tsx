@@ -202,17 +202,24 @@ export default function AtalTunnelChecker() {
 
   // WebPage schema, separate from FAQPage above since dateModified is not a
   // valid property of FAQPage in the schema.org spec (it belongs to
-  // CreativeWork, which WebPage inherits from). dateModified is set to the
-  // exact same lastUpdated value already driving the visible "Last updated"
-  // text on the page, so this is a real, accurate freshness signal, not an
-  // artificially bumped timestamp, it only changes when the underlying
-  // computeLastUpdated() step actually advances.
+  // CreativeWork, which WebPage inherits from).
+  //
+  // IMPORTANT: this must NOT use the `lastUpdated` state variable. That
+  // state starts at LAST_UPDATED_ANCHOR and only gets corrected to the real
+  // current value inside a useEffect, which runs client-side AFTER the
+  // initial render. Server-rendered HTML (what curl, Googlebot's structured
+  // data parser, and any non-JS-executing crawler actually sees) would
+  // therefore show a stale, days-old dateModified, exactly the opposite of
+  // what this schema is supposed to signal. computeLastUpdated() is a pure
+  // function of (anchor, now), so calling it directly here with the real
+  // current time guarantees the server-rendered schema is always accurate,
+  // independent of React state or hydration timing.
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Is Atal Tunnel Open Today?',
     url: 'https://manali.today/is-atal-tunnel-open-today',
-    dateModified: lastUpdated.toISOString(),
+    dateModified: computeLastUpdated(LAST_UPDATED_ANCHOR.getTime(), Date.now()).toISOString(),
   }
 
   return (
