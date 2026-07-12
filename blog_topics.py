@@ -19,9 +19,9 @@ This file and blog.py are for blog volume only.
 """
 
 # ── Topic definitions ─────────────────────────────────────────────────────────
-# type values currently in use: "village", "seasonal_event", "trek"
-# Add new types only if a genuinely new content pattern emerges, each new
-# type needs its own structural branch in blog.py's build_prompt().
+# type values currently in use: "village", "seasonal_event", "trek", "culture",
+# "practical". Add new types only if a genuinely new content pattern emerges,
+# each new type needs its own structural branch in blog.py's build_prompt().
 
 TOPICS = [
 
@@ -103,6 +103,50 @@ TOPICS = [
             "The road up is steep and not particularly well maintained, not for every vehicle",
             "Views and meadows here are genuinely worth the rough drive",
             "Local lore holds that the Pandavas spent part of their exile, their agyatvas, in this village",
+        ],
+    },
+    {
+        "slug": "old-manali-cafes-local-guide",
+        "title": "Old Manali Cafes: A Resident's Honest List",
+        "keyword": "old manali cafes",
+        "type": "village",
+        "tags": ["oldmanali", "cafes", "foodguide", "practical"],
+        "seed_facts": [
+            "Krishna Dhaba: raw, local, affordable, community vibes, run by an uncle and aunty. Famous chai, great homefood thali and egg rolls. Everything is customizable: ask for ragi roti instead of wheat, or a glass of milk with honey instead of chai. Rooftop, tandoor, open seating. In winter you'll even meet their sheep",
+            "Krishna Dhaba is the best place in Old Manali to work all day: wifi, quiet, no alcohol, friendly vibes. You'll meet long-term residents there: Japanese and Russian visitors who've been coming for three decades, homestay owners, full-time traders, people building SaaS from the mountains",
+            "Silver Spoon: my pick for beer and food with friends. Open and indoor seating, smoking allowed at the table, polite staff",
+            "Lazy Dog: live music and drinks, on the expensive side",
+            "Drifters: nice, great pizza, but a smaller space",
+            "Sabali: one of the hidden gems of Manali. Authentic coffee culture and bakery, run by an Indian-South African couple. Outside seating, river view, away from the crowd, a bit expensive. Known for hot chocolate and cheesecake",
+            "Off-season reality: everything above stays open all year except Sabali and Silver Spoon",
+        ],
+    },
+    {
+        "slug": "manu-temple-old-manali",
+        "title": "Manu Temple in Old Manali: History, Timings, and What Locals Know",
+        "keyword": "manu temple old manali",
+        "type": "culture",
+        "tags": ["oldmanali", "manutemple", "history", "culture"],
+        "seed_facts": [
+            "For mainstream Hinduism, Manu is a saint. For locals, he is a local god (devta), that distinction shapes how the temple is actually treated",
+            "A detail almost no tourist knows: the temple visitors go to is not the original. The original temple site is in front of Krishna Dhaba, near the local post office. A landslide many years ago led to the new temple being built at the current location, but the actual old idol remains at the original spot",
+            "The temple is effectively never closed. During local festivals you can still visit, but you are not supposed to photograph the local procession",
+            "One of the most striking winter sights: local priests walking barefoot over snow carrying fire during processions, it feels genuinely otherworldly",
+        ],
+    },
+    {
+        "slug": "where-to-stay-old-manali",
+        "title": "Where to Actually Stay in Old Manali",
+        "keyword": "old manali hotels",
+        "type": "village",
+        "tags": ["oldmanali", "whereToStay", "homestay", "practical"],
+        "seed_facts": [
+            "Old Manali breaks into a few real zones: near the bridge and club house, the central area around Dragon Chowk, around Manu temple and the new road, and the higher village reached via Chhebu Devta and the Kharma valley road",
+            "The hostels, Firefly, The Hosteller, Zostel, are all on the new road",
+            "I'd avoid the lower area around the bridge and club house, loud, chaotic, and genuinely dangerous during monsoon",
+            "Best balance of quiet and accessibility is around Manu temple and the new road",
+            "To fully escape the crowd, find a stay up in Kharma valley",
+            "Monthly stays are cheaper in off-season and essentially impossible to find in peak season, off-season pricing runs Rs 15k to 40k a month depending on amenities like kitchen, view, and parking",
         ],
     },
 
@@ -393,7 +437,7 @@ TOPICS = [
     },
 
     # ── ATAL TUNNEL CONTENT CLUSTER ──────────────────────────────────────────
-    # Six posts deliberately built to reinforce the checker page's authority
+    # Posts deliberately built to reinforce the checker page's authority
     # for "is atal tunnel open today" and related queries. Every post here
     # MUST link back to https://manali.today/is-atal-tunnel-open-today using
     # natural anchor text, this is a deliberate internal-linking push, not
@@ -494,6 +538,110 @@ TOPICS = [
             "It's the longest highway tunnel in the world above 10,000 feet, at roughly 3,100 metres elevation, a real engineering distinction, not just a tourist marketing line",
         ],
     },
+    {
+        "slug": "how-i-actually-check-atal-tunnel-status",
+        "title": "How I Actually Check Whether Atal Tunnel Is Open",
+        "keyword": "atal tunnel status check",
+        "type": "practical",
+        "tags": ["atalTunnel", "verification", "practical", "howTo"],
+        "seed_facts": [
+            "I run the live Atal Tunnel checker on manali.today myself, confirmed through direct access and a small network of local contacts, drivers and residents near the tunnel, not an automated feed",
+            "I aim to verify and update status within roughly 20 to 30 minutes of any real change",
+            "There are more than 46 avalanche-prone sites on the approaches to the tunnel, which is why avalanche control structures were built specifically to protect the road",
+            "Even with the tunnel open, fresh avalanches or heavy snowfall can still force a temporary closure without much notice, the tunnel reduced the risk compared to the old Rohtang route but did not eliminate it",
+            "The tunnel itself has safety infrastructure including CCTV monitoring at both portals and pollution sensors, but none of that tells you today's actual open or closed status, that still comes from someone checking",
+            "Weather numbers shown alongside the live status (temperature, wind, humidity) come from a weather API and are shown purely as helpful context, they are not what determines whether the page says open or closed",
+            "BRO is responsible for maintenance and snow clearance, and closures can happen for routine maintenance as well as weather",
+        ],
+    },
+    {
+        "slug": "atal-tunnel-facts-length-height-route",
+        "title": "Atal Tunnel: Every Fact People Actually Ask",
+        "keyword": "atal tunnel length",
+        "type": "practical",
+        "tags": ["atalTunnel", "facts", "practical", "route"],
+        "seed_facts": [
+            "The tunnel is 9.02 km long, in Himachal Pradesh, connecting the Kullu valley (Manali side) with Lahaul",
+            "Speed limit is 40 kmph for the first few km at entry and exit, and 60 kmph in the middle section, cameras are everywhere inside",
+            "You get mobile network inside the tunnel",
+            "No stopping and no overtaking inside the tunnel, honking is discouraged unless necessary",
+            "Sticking your head out of a sunroof inside the tunnel is extremely dangerous and illegal",
+            "The south portal is a few km from Solang, the north portal is a few km from Sissu",
+            "There's a sharp turn right as you exit the north portal, drive within the regulated speed, a car recently went into the river because of an overspeed exit at the north portal",
+            "No permit is needed for Atal Tunnel, it's open to all vehicles year-round, unlike Rohtang",
+        ],
+    },
+    {
+        "slug": "manali-to-sissu-atal-tunnel-guide",
+        "title": "Manali to Sissu via Atal Tunnel: Distance, Taxi Fare, and What to Know",
+        "keyword": "manali to sissu distance",
+        "type": "practical",
+        "tags": ["atalTunnel", "sissu", "daytrip", "practical"],
+        "seed_facts": [
+            "Manali to Sissu is roughly 40 km via Atal Tunnel, about 1.5 hours in normal conditions, from Old Manali add a bit more",
+            "A return taxi trip runs about Rs 2000 to 3000, and can go higher or lower depending on demand",
+            "Weather flips at the tunnel and is unpredictable, during monsoon the Lahaul (north) side is comparatively drier, in winter it might be snowing on the north side while it rains on the south side",
+            "Sissu vs Solang: Solang only makes sense for snow activities in winter, otherwise skip it, crowded, dirty, and chaotic, Sissu is the better half-day trip for most people",
+        ],
+    },
+
+    # ── ROHTANG PASS CONTENT CLUSTER ──────────────────────────────────────────
+    # Mirrors the Atal Tunnel cluster's purpose: deep-dive support content
+    # reinforcing the Rohtang checker's authority, without literally
+    # duplicating its exact-match target phrase (avoids cannibalizing the
+    # checker's own ranking). Must link back to
+    # https://manali.today/is-rohtang-pass-open-today using natural anchor
+    # text in every post here.
+
+    {
+        "slug": "what-actually-closes-rohtang-pass",
+        "title": "What Actually Closes Rohtang Pass, Besides Snow",
+        "keyword": "why is rohtang pass closed",
+        "type": "practical",
+        "tags": ["rohtang", "verification", "practical", "howTo"],
+        "seed_facts": [
+            "I run the live Rohtang Pass checker on manali.today myself, confirmed through direct access and local contacts, not an automated feed",
+            "Rohtang Pass is closed every Tuesday for routine maintenance, a standing weekly closure separate from any weather-related closure, it stays shut on Tuesdays even on a clear day",
+            "A permit is required to visit Rohtang Pass, available through the Himachal Pradesh government portal at rohtangpermits.hp.gov.in, this is separate from whether the pass is physically open",
+            "Rohtang Pass historically had a reputation for danger in bad weather, the name itself is often said to mean something close to 'pile of corpses' in local tradition, reflecting how harsh conditions there could be before modern road maintenance",
+            "Before Atal Tunnel existed, Rohtang Pass was the only route to Lahaul and used to close for around six months every winter",
+            "Since Atal Tunnel opened, BRO no longer needs to keep Rohtang Pass itself clear for through-traffic to Lahaul, which has changed how the pass is prioritized for snow clearance and maintenance",
+            "Closures can happen for snowfall, avalanche risk, scheduled maintenance, or BRO operations, not just one single cause",
+        ],
+    },
+    {
+        "slug": "rohtang-pass-permit-how-to-get",
+        "title": "How to Get a Rohtang Pass Permit: The Actual Process",
+        "keyword": "rohtang pass permit",
+        "type": "practical",
+        "tags": ["rohtang", "permits", "practical", "howTo"],
+        "seed_facts": [
+            "Permit is applied online through the official Rohtang permits website (rohtangpermits.nic.in), outside peak season it's easy to get",
+            "Peak season is March to June, during peak season the daily quota fills fast, so apply as early as your dates allow",
+            "Daily quota for tourism permits is 1200 vehicles: 800 petrol and 400 diesel, slots are released in two windows, 10 AM and 4 PM",
+            "Cost for a car or bike day trip to Rohtang is Rs 550 total: Rs 500 permit fee plus Rs 50 congestion charge, buses pay Rs 600",
+            "Going beyond Rohtang toward Lahaul, Spiti, or Leh needs only the Rs 50 congestion charge, no permit fee, and no daily quota cap",
+            "Rohtang is closed every Tuesday for maintenance, no permits are issued for Tuesdays",
+            "Vehicles older than 10 years are not issued permits, this is strictly enforced",
+            "The permit is checked at the Gulaba checkpost, carry a printout",
+            "If a cab driver or the local taxi union arranges the permit for you, it's genuine, random agents charging extra to 'guarantee' a permit can be a scam",
+        ],
+    },
+    {
+        "slug": "what-to-expect-rohtang-pass",
+        "title": "What to Actually Expect at Rohtang Pass",
+        "keyword": "best time to visit rohtang pass",
+        "type": "practical",
+        "tags": ["rohtang", "practical", "altitudesickness", "snow"],
+        "seed_facts": [
+            "Unless you go right after opening in March/April, or in late August after fresh snowfall, it does not look like the pictures, spots where tourists concentrate have a lot of dirty, trampled snow",
+            "Altitude sickness (AMS) is a real risk, especially for people over 45, most visitors from the plains have never experienced altitude, so they don't know how their body reacts",
+            "AMS advice: drink plenty of water, carry AMS medicine, and if you feel nausea or trouble breathing, take the medicine and keep walking around slowly, don't sit in one place, and don't run",
+            "Vendors in Manali create FOMO by claiming snow gear and equipment won't be available at the top, everything is available at the last point, renting up there beats hiking around sweaty in a snowsuit from Manali",
+            "Snow activity prices are heavily inflated and haggling is expected",
+            "None of the adventure activities at Rohtang are properly regulated by the local government, and accidents do happen, use your own judgment before signing up for anything",
+        ],
+    },
 
 ]
 
@@ -517,7 +665,12 @@ ATAL_TUNNEL_INTERNAL_LINK = next(
     link for link in INTERNAL_LINKS if link[1] == "https://manali.today/is-atal-tunnel-open-today"
 )
 
-# The six Atal Tunnel cluster posts are spread across culture/practical types
+# Same pattern as ATAL_TUNNEL_INTERNAL_LINK, for the Rohtang Pass cluster.
+ROHTANG_INTERNAL_LINK = next(
+    link for link in INTERNAL_LINKS if link[1] == "https://manali.today/is-rohtang-pass-open-today"
+)
+
+# The Atal Tunnel cluster posts are spread across culture/practical types
 # (not one shared type), so blog.py can't detect cluster membership from
 # `type` alone. This explicit slug set is the actual source of truth for
 # "is this an Atal Tunnel cluster post that must force-link the checker".
@@ -528,6 +681,16 @@ ATAL_TUNNEL_CLUSTER_SLUGS = {
     "atal-tunnel-visitor-access-guide",
     "atal-tunnel-changed-lahaul-locals-life",
     "atal-tunnel-engineering-how-it-was-built",
+    "how-i-actually-check-atal-tunnel-status",
+    "atal-tunnel-facts-length-height-route",
+    "manali-to-sissu-atal-tunnel-guide",
+}
+
+# Same pattern as ATAL_TUNNEL_CLUSTER_SLUGS, for the Rohtang Pass cluster.
+ROHTANG_CLUSTER_SLUGS = {
+    "what-actually-closes-rohtang-pass",
+    "rohtang-pass-permit-how-to-get",
+    "what-to-expect-rohtang-pass",
 }
 
 
@@ -570,6 +733,13 @@ BLOG_INTERNAL_LINKS = [
     ("Sethan: The Village Where the Pandavas Reportedly Hid, Now a Quiet Escape", "https://manali.today/blog/sethan-village-offbeat-manali"),
     ("Shanag Village, Manali: Why I'd Stay Here Over Mall Road", "https://manali.today/blog/shanag-village-manali-guide"),
     ("Solang Valley Paragliding: When to Actually Go, and What I'd Skip", "https://manali.today/blog/solang-valley-paragliding-guide"),
+    ("Atal Tunnel: Every Fact People Actually Ask", "https://manali.today/blog/atal-tunnel-facts-length-height-route"),
+    ("Manali to Sissu via Atal Tunnel: Distance, Taxi Fare, and What to Know", "https://manali.today/blog/manali-to-sissu-atal-tunnel-guide"),
+    ("Old Manali Cafes: A Resident's Honest List", "https://manali.today/blog/old-manali-cafes-local-guide"),
+    ("Manu Temple in Old Manali: History, Timings, and What Locals Know", "https://manali.today/blog/manu-temple-old-manali"),
+    ("Where to Actually Stay in Old Manali", "https://manali.today/blog/where-to-stay-old-manali"),
+    ("How to Get a Rohtang Pass Permit: The Actual Process", "https://manali.today/blog/rohtang-pass-permit-how-to-get"),
+    ("What to Actually Expect at Rohtang Pass", "https://manali.today/blog/what-to-expect-rohtang-pass"),
 ]
 
 
