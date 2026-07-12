@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ContentShell from '../components/ContentShell'
 
 export const metadata: Metadata = {
-  title: 'About | manali.today',
+  title: 'About',
   description: 'Who runs manali.today, why it exists, and exactly how live status updates for snow, Atal Tunnel, and Rohtang Pass are actually verified.',
   alternates: {
     canonical: 'https://manali.today/about',

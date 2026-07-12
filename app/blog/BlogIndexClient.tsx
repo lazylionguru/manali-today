@@ -30,8 +30,7 @@ export default function BlogIndexClient({ posts }: { posts: BlogPost[] }) {
     )
   }
 
-  const visiblePosts = posts.slice(0, visibleCount)
-  const hasMore = visiblePosts.length < posts.length
+  const hasMore = visibleCount < posts.length
 
   return (
     <div className="bi-wrap">
@@ -47,8 +46,12 @@ export default function BlogIndexClient({ posts }: { posts: BlogPost[] }) {
       </p>
 
       <div className="bi-grid">
-        {visiblePosts.map((post) => (
-          <Link key={post.frontmatter.slug} href={`/blog/${post.frontmatter.slug}`} className="bi-card">
+        {posts.map((post, i) => (
+          <Link
+            key={post.frontmatter.slug}
+            href={`/blog/${post.frontmatter.slug}`}
+            className={`bi-card${i >= visibleCount ? ' bi-card-hidden' : ''}`}
+          >
             <img
               className="bi-card-img"
               src={post.frontmatter.thumbImage}
@@ -56,7 +59,7 @@ export default function BlogIndexClient({ posts }: { posts: BlogPost[] }) {
               loading="lazy"
             />
             <div className="bi-card-body">
-              <h3 className="bi-card-title">{post.frontmatter.title}</h3>
+              <h2 className="bi-card-title">{post.frontmatter.title}</h2>
               <div className="bi-meta">
                 <span>{formatDate(post.frontmatter.publishedAt)}</span>
                 <span className="bi-dot">·</span>
@@ -105,6 +108,7 @@ const blogIndexStyles = `
     transition:border-color .25s ease, transform .25s ease;
   }
   .bi-card:hover { border-color:rgba(198,227,255,0.3); transform:translateY(-2px) }
+  .bi-card-hidden { display:none }
   .bi-card-img { display:block; width:100%; height:160px; object-fit:cover; object-position:center }
   .bi-card-body { padding:1.25rem 1.3rem 1.4rem }
   .bi-card-title {

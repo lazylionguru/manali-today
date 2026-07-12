@@ -9,7 +9,7 @@ interface ContentShellProps {
 
 /**
  * Shared layout for scrollable content pages (guide index, guide articles,
- * and future /places and /blog pages).
+ * and blog pages).
  *
  * Unlike the checker pages, this shell does NOT lock html/body scroll and
  * does NOT pin the footer with position:fixed — content here can run
@@ -85,8 +85,6 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
           color:rgba(255,255,255,0.45); text-decoration:none; transition:color .2s ease; white-space:nowrap;
         }
         .cs-footer-explore a:hover { color:rgba(255,255,255,0.8) }
-        .cs-footer-explore a.soon { color:rgba(255,255,255,0.2); pointer-events:none }
-        .cs-footer-explore a.soon::after { content:' —'; color:rgba(255,255,255,0.12) }
         .cs-footer-love {
           font-family:var(--font-cormorant), serif;
           font-size:12px; font-weight:300; font-style:italic;
@@ -121,6 +119,24 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
           border-left:2px solid rgba(198,227,255,0.4);
           padding-left:1.25rem; margin:1.5rem 0;
           font-style:italic; color:rgba(255,255,255,0.55);
+        }
+        .mdx-blockquote:has(strong:first-child) {
+          font-style:normal;
+          background:rgba(198,227,255,0.05);
+          border-left:2px solid rgba(198,227,255,0.5);
+          border-radius:8px;
+          padding:1rem 1.25rem;
+          margin:1.5rem 0 2rem;
+        }
+        .mdx-blockquote:has(strong:first-child) p {
+          margin-bottom:0.5rem;
+        }
+        .mdx-blockquote:has(strong:first-child) ul {
+          margin:0; padding-left:1.2rem;
+        }
+        .mdx-blockquote:has(strong:first-child) li {
+          font-size:14px; color:rgba(255,255,255,0.7);
+          margin-bottom:0.35rem;
         }
         .mdx-hr {
           border:none; height:1px;
@@ -174,7 +190,6 @@ export default function ContentShell({ location = 'Manali · Kullu Valley · 205
             </div>
             <div className="cs-footer-explore">
               <a href="/guide">Local Guide</a>
-              <a href="/places" className="soon">Places we love</a>
               <a href="/blog">Blog</a>
               <a href="/about">About</a>
             </div>

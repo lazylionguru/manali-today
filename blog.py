@@ -646,8 +646,8 @@ def save_as_mdx(topic, content):
             description = re.sub(r'\[(.+?)\]\(.+?\)', r'\1', description)
             description = description.replace('"', '').replace("'", '').replace(':', ' ').replace('\\', '')
             description = description.strip()
-            if len(description) > 160:
-                truncated = description[:160].rsplit(' ', 1)[0]
+            if len(description) > 155:
+                truncated = description[:150].rsplit(' ', 1)[0]
                 description = truncated.rstrip('.,;') + '...'
             break
 

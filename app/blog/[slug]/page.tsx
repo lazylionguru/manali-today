@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const url = `https://manali.today/blog/${slug}`
 
   return {
-    title: `${title} | manali.today`,
+    title,
     description,
     alternates: { canonical: url },
     openGraph: {

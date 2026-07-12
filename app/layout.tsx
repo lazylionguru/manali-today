@@ -21,8 +21,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://manali.today'),
   title: {
-    default: 'Manali.today — Live Conditions & Local Guide',
-    template: '%s | Manali.today',
+    default: 'Is it Snowing in Manali Today?',
+    template: '%s | manali.today',
   },
   description: 'Live snow, road & weather conditions in Manali, Himachal Pradesh. Updated by someone who lives here.',
   openGraph: {

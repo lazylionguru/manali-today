@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import AtalTunnelChecker from '../components/AtalTunnelChecker'
 
 export const metadata: Metadata = {
-  title: 'Is Atal Tunnel Open Today? Live Status | manali.today',
+  title: 'Is Atal Tunnel Open Today? Live Status',
   description: 'Live status of Atal Tunnel, Rohtang: open, closed, or AWD only. Confirmed daily by someone who actually lives in Manali, not an automated feed.',
   alternates: {
     canonical: 'https://manali.today/is-atal-tunnel-open-today',

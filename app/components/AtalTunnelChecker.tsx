@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import Footer from './Footer'
 import Nav from './Nav'
 import BrandHeader from './BrandHeader'
@@ -362,6 +363,18 @@ export default function AtalTunnelChecker() {
           animation:pulse-soft 2.5s ease-in-out infinite;
         }
 
+        .related-reads {
+          display:flex; align-items:center; justify-content:center; gap:14px;
+          margin-top:6px; flex-wrap:wrap;
+        }
+        .related-reads a {
+          font-size:10.5px; letter-spacing:.04em;
+          color:rgba(198,227,255,0.65); text-decoration:none;
+          border-bottom:1px solid rgba(198,227,255,0.25);
+          transition:border-color .2s ease, color .2s ease;
+        }
+        .related-reads a:hover { color:rgba(198,227,255,0.95); border-color:rgba(198,227,255,0.7) }
+
         .wx-bar {
           position:fixed; bottom:45px; left:0; right:0; z-index:19;
           padding:1.2rem 2.5rem;
@@ -451,6 +464,10 @@ export default function AtalTunnelChecker() {
               <div className="last-updated">
                 <span className="ts-dot" />
                 Last updated: <span>{formattedLastUpdated}</span>
+              </div>
+              <div className="related-reads">
+                <Link href="/blog/atal-tunnel-visitor-access-guide">Visiting? Read the guide</Link>
+                <Link href="/blog/how-i-actually-check-atal-tunnel-status">How I check this status</Link>
               </div>
             </div>
           </div>

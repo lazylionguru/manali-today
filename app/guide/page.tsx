@@ -4,7 +4,7 @@ import ContentShell from '../components/ContentShell'
 import { getAllGuides } from '../../lib/mdx'
 
 export const metadata: Metadata = {
-  title: 'Manali Travel Guide, Written by a Local Resident | manali.today',
+  title: 'Manali Travel Guide by a Local Resident',
   description:
     'In-depth Manali travel guides written by someone who actually lives here: best time to visit, Rohtang permits, Solang Valley, Old Manali, weather by month, and more.',
   alternates: { canonical: 'https://manali.today/guide' },

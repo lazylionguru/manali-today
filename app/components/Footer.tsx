@@ -62,14 +62,6 @@ export default function Footer() {
           white-space: nowrap;
         }
         .footer-explore a:hover { color: rgba(255, 255, 255, 0.8) }
-        .footer-explore a.soon {
-          color: rgba(255, 255, 255, 0.2);
-          pointer-events: none;
-        }
-        .footer-explore a.soon::after {
-          content: ' —';
-          color: rgba(255, 255, 255, 0.12);
-        }
 
         .footer-love {
           font-family: var(--font-cormorant), serif;
@@ -98,7 +90,6 @@ export default function Footer() {
 
           <div className="footer-explore">
             <a href="/guide">Local Guide</a>
-            <a href="/places" className="soon">Places we love</a>
             <a href="/blog">Blog</a>
             <a href="/about">About</a>
           </div>
