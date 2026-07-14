@@ -113,7 +113,10 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <script defer src="https://kymo.in/beat.js" data-site="manali.today"></script>
+      </body>
     </html>
   )
 }
